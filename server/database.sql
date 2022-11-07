@@ -18,11 +18,11 @@ CREATE TABLE comment(
     id SERIAL PRIMARY KEY NOT NULL,
     profile_id INT REFERENCES profile(id) ON DELETE CASCADE,
     post_id INT REFERENCES post(id) ON DELETE CASCADE
-)
+);
 
 CREATE TABLE reaction (
     id SERIAL PRIMARY KEY NOT NULL,
     profile_id INT REFERENCES profile(id) ON DELETE CASCADE,
     post_id INT REFERENCES post(id) ON DELETE CASCADE,
     reaction_type VARCHAR(255) NOT NULL
-)
+);
