@@ -11,7 +11,7 @@ CREATE TABLE post(
     id SERIAL PRIMARY KEY NOT NULL,
     profile_id INT REFERENCES profile(id) ON DELETE CASCADE,
     content VARCHAR(1000),
-    post_date DATE
+    post_date DATE DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE comment(
@@ -25,4 +25,15 @@ CREATE TABLE reaction (
     profile_id INT REFERENCES profile(id) ON DELETE CASCADE,
     post_id INT REFERENCES post(id) ON DELETE CASCADE,
     reaction_type VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE tag (
+    id SERIAL PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE tag_post (
+    id SERIAL PRIMARY KEY NOT NULL,
+    post_id INT REFERENCES post(id) ON DELETE CASCADE,
+    tag_id INT REFERENCES tag(id) ON DELETE CASCADE
 );
