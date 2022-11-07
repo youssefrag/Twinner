@@ -32,7 +32,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   return (
     <StyledDrawer variant="permanent" anchor="left">
       <Stack alignItems="center" marginTop={5} gap={7}>
