@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 import { Button, Drawer, Stack, Typography } from "@mui/material";
 
@@ -33,6 +34,10 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const Navbar: React.FC = () => {
+  const userContext = useContext(UserContext);
+
+  console.log(userContext);
+
   return (
     <StyledDrawer variant="permanent" anchor="left">
       <Stack alignItems="center" marginTop={5} gap={7}>
@@ -42,7 +47,13 @@ const Navbar: React.FC = () => {
         </Stack>
         <Stack alignItems="center" gap={4}>
           <Typography variant="navSubHeading">User</Typography>
-          <StyledButton>LOGIN/REGISTER</StyledButton>
+          {userContext.user === null ? (
+            <StyledButton>LOGIN/REGISTER</StyledButton>
+          ) : (
+            <Typography>
+              <>{userContext.user}</>
+            </Typography>
+          )}
         </Stack>
       </Stack>
     </StyledDrawer>

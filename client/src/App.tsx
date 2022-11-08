@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 
-import Cookies from "js-cookie";
+import { UserContextProvider } from "./context/UserContext";
 
-// import { UserContext } from "./context/userContext";
-// import { UserContextProvider } from "./context/userContext";
+import Cookies from "js-cookie";
 
 import { ThemeProvider } from "@mui/material/styles";
 import MainTheme from "./theme";
@@ -25,7 +24,12 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={MainTheme}>
-        <Navbar />
+        <UserContextProvider
+          isUserLoggedIn={isUserLoggedIn}
+          setUserLoggedIn={setUserLoggedIn}
+        >
+          <Navbar />
+        </UserContextProvider>
       </ThemeProvider>
     </div>
   );
