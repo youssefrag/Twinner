@@ -16,10 +16,9 @@ app.post("/profiles", async (req, res) => {
   try {
     const { name, email, password } = req.body;
     const newProfile = await pool.query(
-      "INSERT INTO profile (name, email, password) VALUES($1, $2, $3)",
+      "INSERT INTO profile (name, email, password) VALUES($1, $2, $3) RETURNING *",
       [name, email, password]
     );
-
     res.json(newProfile);
   } catch (err) {
     console.log(err.message);

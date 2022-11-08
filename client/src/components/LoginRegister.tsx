@@ -126,6 +126,15 @@ const LoginRegister = () => {
       alert("passwords are not matching");
       return;
     }
+    let response = await fetch("http://localhost:8080/profiles", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userRegister),
+    });
+    let result = await response.json();
+    console.log(result.rows[0]);
   };
 
   return (
