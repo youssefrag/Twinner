@@ -51,7 +51,7 @@ const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "40rem",
+  width: "30rem",
   bgcolor: "#f2eefe",
   boxShadow: 24,
   p: 4,
@@ -86,6 +86,15 @@ const LoginRegister = () => {
               >
                 New user? Sign up
               </Typography>
+              <Stack gap={3}>
+                <StyledTextField placeholder="Enter Email" name="email" />
+                <StyledTextField
+                  placeholder="Enter Password"
+                  name="password"
+                  type="password"
+                />
+                <SubmitButton>Submit</SubmitButton>
+              </Stack>
             </Stack>
           )}
           {page === "register" && (
@@ -103,10 +112,15 @@ const LoginRegister = () => {
               <Stack gap={3}>
                 <StyledTextField placeholder="Enter Name" name="name" />
                 <StyledTextField placeholder="Enter Email" name="email" />
-                <StyledTextField placeholder="Enter Password" name="password" />
+                <StyledTextField
+                  placeholder="Enter Password"
+                  name="password"
+                  type="password"
+                />
                 <StyledTextField
                   placeholder="Confirm Password"
-                  name="ConfirmPassword"
+                  name="confirmPassword"
+                  type="password"
                 />
                 <SubmitButton>Submit</SubmitButton>
               </Stack>
