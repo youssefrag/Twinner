@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 import {
   Box,
@@ -60,6 +61,10 @@ const modalStyle = {
 };
 
 const LoginRegister = () => {
+  const userContext = useContext(UserContext);
+
+  //   console.log(userContext);
+
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const [page, setPage] = useState<string>("login");
@@ -135,6 +140,11 @@ const LoginRegister = () => {
     });
     let result = await response.json();
     console.log(result.rows[0]);
+    userContext.setUser({
+      userId: Number(result.rows[0].id),
+      name: result.rows[0].name,
+      email: result.rows[0].email,
+    });
   };
 
   return (

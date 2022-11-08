@@ -26,8 +26,6 @@ const StyledLogoIcon = styled(CampaignIcon)(({ theme }) => ({
 const Navbar: React.FC = () => {
   const userContext = useContext(UserContext);
 
-  console.log(userContext);
-
   return (
     <StyledDrawer variant="permanent" anchor="left">
       <Stack alignItems="center" marginTop={5} gap={7}>
