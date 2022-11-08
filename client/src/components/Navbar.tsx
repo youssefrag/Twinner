@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 
-import { Button, Drawer, Stack, Typography } from "@mui/material";
+import { Drawer, Stack, Typography } from "@mui/material";
 
 import { styled } from "@mui/material/styles";
 
 import CampaignIcon from "@mui/icons-material/Campaign";
+
+import LoginRegister from "./LoginRegister";
 
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
   "& .MuiDrawer-paper": {
@@ -19,18 +21,6 @@ const StyledLogoIcon = styled(CampaignIcon)(({ theme }) => ({
   color: "#fff",
   height: "3rem",
   width: "3rem",
-}));
-
-const StyledButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.light,
-  fontSize: "1rem",
-  padding: "0.5rem 1.2rem",
-  color: theme.palette.primary.dark,
-  "&:hover": {
-    backgroundColor: theme.palette.primary.light,
-    color: theme.palette.primary.dark,
-    fontSize: "1.2rem",
-  },
 }));
 
 const Navbar: React.FC = () => {
@@ -48,7 +38,7 @@ const Navbar: React.FC = () => {
         <Stack alignItems="center" gap={4}>
           <Typography variant="navSubHeading">User</Typography>
           {userContext.user === null ? (
-            <StyledButton>LOGIN/REGISTER</StyledButton>
+            <LoginRegister />
           ) : (
             <Typography>
               <>{userContext.user}</>

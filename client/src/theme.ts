@@ -12,12 +12,16 @@ declare module "@mui/material/styles" {
   interface TypographyVariants {
     logo: React.CSSProperties;
     navSubHeading: React.CSSProperties;
+    mainSubHeading: React.CSSProperties;
+    switchPage: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
   interface TypographyVariantsOptions {
     logo?: React.CSSProperties;
     navSubHeading?: React.CSSProperties;
+    mainSubHeading: React.CSSProperties;
+    switchPage: React.CSSProperties;
   }
 }
 
@@ -26,6 +30,8 @@ declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     logo: true;
     navSubHeading: true;
+    mainSubHeading: true;
+    switchPage: true;
   }
 }
 
@@ -53,6 +59,18 @@ const MainTheme = createTheme({
     navSubHeading: {
       fontSize: "2rem",
       color: "#fff",
+    },
+    mainSubHeading: {
+      fontFamily: "Lato, sans-serif",
+      fontSize: "2.8rem",
+      color: "#302061",
+      fontWeight: 700,
+    },
+    switchPage: {
+      fontFamily: "Lato, sans-serif",
+      fontSize: "1.2rem",
+      color: "#302061",
+      cursor: "pointer",
     },
   },
   spacing: [2, 4, 8, 12, 16, 24, 32, 48, 64, 80, 96, 128, 160],
