@@ -78,9 +78,12 @@ const LoginRegister = () => {
       >
         <Box sx={modalStyle}>
           {page === "login" && (
-            <Stack gap={4}>
-              <Typography variant="mainSubHeading">Login</Typography>
+            <Stack>
+              <Typography variant="mainSubHeading" marginBottom={2}>
+                Login
+              </Typography>
               <Typography
+                marginBottom={5}
                 variant="switchPage"
                 onClick={() => setPage("register")}
               >
