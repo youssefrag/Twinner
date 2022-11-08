@@ -67,6 +67,25 @@ const LoginRegister = () => {
   const handleOpenMOdal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
+  // Handle register data
+
+  interface RegisterData {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }
+
+  const [userRegister, setUserRegister] = useState<RegisterData | null>(null);
+
+  const handleRegisterChange = (e: React.FormEvent) => {
+    const element = e.currentTarget as HTMLInputElement;
+    const value = element.value;
+    const name = element.name;
+    // const value = e.target.value;
+    setUserRegister((prev) => ({ ...userRegister, [name]: value || "" }));
+  };
+
   return (
     <>
       <StyledButton onClick={handleOpenMOdal}>LOGIN/REGISTER</StyledButton>
@@ -89,15 +108,15 @@ const LoginRegister = () => {
               >
                 New user? Sign up
               </Typography>
-              <Stack gap={3}>
+              <Stack gap={3} marginBottom={5}>
                 <StyledTextField placeholder="Enter Email" name="email" />
                 <StyledTextField
                   placeholder="Enter Password"
                   name="password"
                   type="password"
                 />
-                <SubmitButton>Submit</SubmitButton>
               </Stack>
+              <SubmitButton>Submit</SubmitButton>
             </Stack>
           )}
           {page === "register" && (
@@ -112,21 +131,31 @@ const LoginRegister = () => {
               >
                 Already have an account? Login
               </Typography>
-              <Stack gap={3}>
-                <StyledTextField placeholder="Enter Name" name="name" />
-                <StyledTextField placeholder="Enter Email" name="email" />
+              <Stack gap={3} marginBottom={5}>
+                <StyledTextField
+                  placeholder="Enter Name"
+                  name="name"
+                  onChange={handleRegisterChange}
+                />
+                <StyledTextField
+                  placeholder="Enter Email"
+                  name="email"
+                  onChange={handleRegisterChange}
+                />
                 <StyledTextField
                   placeholder="Enter Password"
                   name="password"
                   type="password"
+                  onChange={handleRegisterChange}
                 />
                 <StyledTextField
                   placeholder="Confirm Password"
                   name="confirmPassword"
                   type="password"
+                  onChange={handleRegisterChange}
                 />
-                <SubmitButton>Submit</SubmitButton>
               </Stack>
+              <SubmitButton>Submit</SubmitButton>
             </Stack>
           )}
         </Box>
