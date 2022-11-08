@@ -67,6 +67,34 @@ const LoginRegister = () => {
   const handleOpenMOdal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
+  // Handle login data
+
+  interface LoginData {
+    email: string;
+    password: string;
+  }
+
+  const [userLogin, setUserLogin] = useState<LoginData>(null);
+
+  const handleLoginChange = (e: React.FormEvent) => {
+    const element = e.currentTarget as HTMLInputElement;
+    const value = element.value;
+    const name = element.name;
+    setUserLogin((prev) => ({ ...userLogin, [name]: value || "" }));
+  };
+
+  const handleLoginSubmit = async () => {
+    if (userLogin === null) {
+      alert("Missing Field");
+      return;
+    }
+    const { email, password } = userLogin;
+    if (!email || !password) {
+      alert("Missing Field");
+      return;
+    }
+  };
+
   // Handle register data
 
   interface RegisterData {
@@ -76,14 +104,28 @@ const LoginRegister = () => {
     confirmPassword: string;
   }
 
-  const [userRegister, setUserRegister] = useState<RegisterData | null>(null);
+  const [userRegister, setUserRegister] = useState<RegisterData>(null);
 
   const handleRegisterChange = (e: React.FormEvent) => {
     const element = e.currentTarget as HTMLInputElement;
     const value = element.value;
     const name = element.name;
-    // const value = e.target.value;
     setUserRegister((prev) => ({ ...userRegister, [name]: value || "" }));
+  };
+
+  const handleRegisterSubmit = async () => {
+    if (userRegister === null) {
+      alert("Missing Fields");
+      return;
+    }
+    const { name, email, password, confirmPassword } = userRegister;
+    if (!name || !email || !password || !confirmPassword) {
+      alert("Missing Field");
+      return;
+    } else if (password !== confirmPassword) {
+      alert("passwords are not matching");
+      return;
+    }
   };
 
   return (
@@ -109,14 +151,19 @@ const LoginRegister = () => {
                 New user? Sign up
               </Typography>
               <Stack gap={3} marginBottom={5}>
-                <StyledTextField placeholder="Enter Email" name="email" />
+                <StyledTextField
+                  placeholder="Enter Email"
+                  name="email"
+                  onChange={handleLoginChange}
+                />
                 <StyledTextField
                   placeholder="Enter Password"
                   name="password"
                   type="password"
+                  onChange={handleLoginChange}
                 />
               </Stack>
-              <SubmitButton>Submit</SubmitButton>
+              <SubmitButton onClick={handleLoginSubmit}>Submit</SubmitButton>
             </Stack>
           )}
           {page === "register" && (
@@ -155,7 +202,7 @@ const LoginRegister = () => {
                   onChange={handleRegisterChange}
                 />
               </Stack>
-              <SubmitButton>Submit</SubmitButton>
+              <SubmitButton onClick={handleRegisterSubmit}>Submit</SubmitButton>
             </Stack>
           )}
         </Box>
