@@ -13,7 +13,9 @@ import Navbar from "./components/Navbar";
 function App() {
   const [isUserLoggedIn, setUserLoggedIn] = useState<boolean>(false);
 
-  const userId = Cookies.get("user");
+  const userId = Cookies.get("userId");
+  const name = Cookies.get("name");
+  const email = Cookies.get("email");
 
   useEffect(() => {
     if (userId) {
@@ -25,6 +27,9 @@ function App() {
     <div className="App">
       <ThemeProvider theme={MainTheme}>
         <UserContextProvider
+          name={name}
+          email={email}
+          userId={userId}
           isUserLoggedIn={isUserLoggedIn}
           setUserLoggedIn={setUserLoggedIn}
         >

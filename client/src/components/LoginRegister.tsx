@@ -1,6 +1,8 @@
 import { useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 
+import Cookies from "js-cookie";
+
 import {
   Box,
   Button,
@@ -141,10 +143,14 @@ const LoginRegister = () => {
     let result = await response.json();
     console.log(result.rows[0]);
     userContext.setUser({
-      userId: Number(result.rows[0].id),
+      userId: result.rows[0].id,
       name: result.rows[0].name,
       email: result.rows[0].email,
     });
+    userContext.setUserLoggedIn(true);
+    Cookies.set("userId", result.rows[0].id);
+    Cookies.set("name", result.rows[0].name);
+    Cookies.set("email", result.rows[0].email);
   };
 
   return (

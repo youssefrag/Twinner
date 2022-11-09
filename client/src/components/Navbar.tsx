@@ -35,12 +35,10 @@ const Navbar: React.FC = () => {
         </Stack>
         <Stack alignItems="center" gap={4}>
           <Typography variant="navSubHeading">User</Typography>
-          {userContext.user === null ? (
+          {!userContext.isUserLoggedIn ? (
             <LoginRegister />
           ) : (
-            <Typography>
-              <>{userContext.user}</>
-            </Typography>
+            <Typography>{/* <>{userContext.user}</> */}</Typography>
           )}
         </Stack>
       </Stack>

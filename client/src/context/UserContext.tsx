@@ -1,7 +1,7 @@
 import React, { useState, createContext } from "react";
 
 export type AuthUser = {
-  userId: number;
+  userId: string;
   name: string;
   email: string;
 };
@@ -15,6 +15,9 @@ type UserContextType = {
 
 type UserContextProviderProps = {
   children: React.ReactNode;
+  userId: string;
+  name: string;
+  email: string;
   isUserLoggedIn: boolean;
   setUserLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -22,11 +25,14 @@ type UserContextProviderProps = {
 export const UserContext = createContext<UserContextType | null>(null);
 
 export const UserContextProvider = ({
+  userId,
+  name,
+  email,
   children,
   isUserLoggedIn,
   setUserLoggedIn,
 }: UserContextProviderProps) => {
-  const [user, setUser] = useState<AuthUser | null>(null);
+  const [user, setUser] = useState<AuthUser | null>({ userId, name, email });
   return (
     <UserContext.Provider
       value={{ user, setUser, isUserLoggedIn, setUserLoggedIn }}
