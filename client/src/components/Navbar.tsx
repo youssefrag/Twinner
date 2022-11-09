@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 
-import { Drawer, Stack, Typography } from "@mui/material";
+import { Box, Drawer, Stack, Typography } from "@mui/material";
 
 import { styled } from "@mui/material/styles";
 
@@ -21,6 +21,17 @@ const StyledLogoIcon = styled(CampaignIcon)(({ theme }) => ({
   color: "#fff",
   height: "3rem",
   width: "3rem",
+}));
+
+const InitialBox = styled(Box)(({ theme }) => ({
+  backgroundColor: "#fff",
+  height: "3rem",
+  width: "3rem",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  fontSize: "1.4rem",
+  borderRadius: "50%",
 }));
 
 const Navbar: React.FC = () => {
@@ -47,7 +58,12 @@ const Navbar: React.FC = () => {
           {!userContext.isUserLoggedIn ? (
             <LoginRegister />
           ) : (
-            <Typography>{userContext.user.name}</Typography>
+            <Stack flexDirection="row" alignItems="center" gap={4}>
+              <InitialBox>{initials}</InitialBox>
+              <Typography variant="displayName">
+                {userContext.user.name}
+              </Typography>
+            </Stack>
           )}
         </Stack>
       </Stack>

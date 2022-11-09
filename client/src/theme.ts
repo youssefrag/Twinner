@@ -14,6 +14,7 @@ declare module "@mui/material/styles" {
     navSubHeading: React.CSSProperties;
     mainSubHeading: React.CSSProperties;
     switchPage: React.CSSProperties;
+    displayName: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
@@ -22,6 +23,7 @@ declare module "@mui/material/styles" {
     navSubHeading?: React.CSSProperties;
     mainSubHeading: React.CSSProperties;
     switchPage: React.CSSProperties;
+    displayName: React.CSSProperties;
   }
 }
 
@@ -32,6 +34,7 @@ declare module "@mui/material/Typography" {
     navSubHeading: true;
     mainSubHeading: true;
     switchPage: true;
+    displayName: true;
   }
 }
 
@@ -71,6 +74,10 @@ const MainTheme = createTheme({
       fontSize: "1.2rem",
       color: "#302061",
       cursor: "pointer",
+    },
+    displayName: {
+      color: "#fff",
+      fontSize: "1.2rem",
     },
   },
   spacing: [2, 4, 8, 12, 16, 24, 32, 48, 64, 80, 96, 128, 160],
