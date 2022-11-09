@@ -1,6 +1,10 @@
 import { useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 
+import EmailAlreadyExists from "../messages/EmailAlreadyExists";
+import MissingField from "../messages/MissingField";
+import EmailDoesNotExist from "../messages/EmailDoesNotExist";
+
 import Cookies from "js-cookie";
 
 import {
@@ -62,17 +66,51 @@ const modalStyle = {
   padding: "4rem",
 };
 
+type Alerts = {
+  emailAlreadyExists: boolean;
+  missingField: boolean;
+  emailDoesNotExist: boolean;
+};
+
 const LoginRegister = () => {
   const userContext = useContext(UserContext);
 
-  //   console.log(userContext);
+  const [alerts, setAlerts] = useState<Alerts>({
+    emailAlreadyExists: false,
+    missingField: false,
+    emailDoesNotExist: false,
+  });
+
+  const resetAlerts = () => {
+    setAlerts({
+      emailAlreadyExists: false,
+      missingField: false,
+      emailDoesNotExist: false,
+    });
+  };
 
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const [page, setPage] = useState<string>("login");
 
+  const switchPage = () => {
+    resetAlerts();
+    if (page === "login") {
+      setUserLogin(null);
+      setPage("register");
+    } else if (page === "register") {
+      setUserRegister(null);
+      setPage("login");
+    }
+  };
+
   const handleOpenMOdal = () => setOpenModal(true);
-  const handleCloseModal = () => setOpenModal(false);
+  const handleCloseModal = () => {
+    setUserLogin(null);
+    setUserRegister(null);
+    resetAlerts();
+    setOpenModal(false);
+  };
 
   // Handle login data
 
@@ -91,13 +129,22 @@ const LoginRegister = () => {
   };
 
   const handleLoginSubmit = async () => {
+    resetAlerts();
     if (userLogin === null) {
-      alert("Missing Field");
+      setAlerts({
+        emailAlreadyExists: false,
+        missingField: true,
+        emailDoesNotExist: false,
+      });
       return;
     }
     const { email, password } = userLogin;
     if (!email || !password) {
-      alert("Missing Field");
+      setAlerts({
+        emailAlreadyExists: false,
+        missingField: true,
+        emailDoesNotExist: false,
+      });
       return;
     }
     let response = await fetch(
@@ -110,7 +157,11 @@ const LoginRegister = () => {
     console.log(result.rows[0]);
     const userDataDB = result.rows[0];
     if (!userDataDB) {
-      alert("email does not exist");
+      setAlerts({
+        emailAlreadyExists: false,
+        missingField: false,
+        emailDoesNotExist: true,
+      });
       return;
     }
     if (password !== userDataDB.password) {
@@ -148,12 +199,20 @@ const LoginRegister = () => {
 
   const handleRegisterSubmit = async () => {
     if (userRegister === null) {
-      alert("Missing Fields");
+      setAlerts({
+        emailAlreadyExists: false,
+        missingField: true,
+        emailDoesNotExist: false,
+      });
       return;
     }
     const { name, email, password, confirmPassword } = userRegister;
     if (!name || !email || !password || !confirmPassword) {
-      alert("Missing Field");
+      setAlerts({
+        emailAlreadyExists: false,
+        missingField: true,
+        emailDoesNotExist: false,
+      });
       return;
     } else if (password !== confirmPassword) {
       alert("passwords are not matching");
@@ -172,7 +231,11 @@ const LoginRegister = () => {
       result ===
       'duplicate key value violates unique constraint "profile_email_key"'
     ) {
-      alert("email already exists");
+      setAlerts({
+        emailAlreadyExists: true,
+        missingField: false,
+        emailDoesNotExist: false,
+      });
       return;
     }
     const userDataDB = result.rows[0];
@@ -205,10 +268,12 @@ const LoginRegister = () => {
               <Typography
                 marginBottom={5}
                 variant="switchPage"
-                onClick={() => setPage("register")}
+                onClick={switchPage}
               >
                 New user? Sign up
               </Typography>
+              {alerts.missingField && <MissingField />}
+              {alerts.emailDoesNotExist && <EmailDoesNotExist />}
               <Stack gap={3} marginBottom={5}>
                 <StyledTextField
                   placeholder="Enter Email"
@@ -233,10 +298,12 @@ const LoginRegister = () => {
               <Typography
                 marginBottom={5}
                 variant="switchPage"
-                onClick={() => setPage("login")}
+                onClick={switchPage}
               >
                 Already have an account? Login
               </Typography>
+              {alerts.emailAlreadyExists && <EmailAlreadyExists />}
+              {alerts.missingField && <MissingField />}
               <Stack gap={3} marginBottom={5}>
                 <StyledTextField
                   placeholder="Enter Name"

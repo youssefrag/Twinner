@@ -78,7 +78,6 @@ const Navbar: React.FC = () => {
           <StyledLogoIcon />
         </Stack>
         <Stack alignItems="center" gap={4}>
-          <Typography variant="navSubHeading">User</Typography>
           {!userContext.isUserLoggedIn ? (
             <LoginRegister />
           ) : (
