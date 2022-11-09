@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 
-import { Box, Drawer, Stack, Typography } from "@mui/material";
+import { Box, Button, Drawer, Stack, Typography } from "@mui/material";
 
 import { styled } from "@mui/material/styles";
 
 import CampaignIcon from "@mui/icons-material/Campaign";
 
 import LoginRegister from "./LoginRegister";
+import Cookies from "js-cookie";
 
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
   "& .MuiDrawer-paper": {
@@ -34,17 +35,40 @@ const InitialBox = styled(Box)(({ theme }) => ({
   borderRadius: "50%",
 }));
 
+const StyledButton = styled(Button)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.light,
+  fontSize: "1rem",
+  padding: "0.5rem 1.2rem",
+  color: theme.palette.primary.dark,
+  "&:hover": {
+    backgroundColor: "#fff",
+    color: theme.palette.primary.dark,
+  },
+}));
+
 const Navbar: React.FC = () => {
   const userContext = useContext(UserContext);
 
-  const name = userContext.user.name;
-
-  const nameArray = name.split(" ");
-
   let initials = "";
 
-  initials += nameArray[0][0].toUpperCase();
-  initials += nameArray[nameArray.length - 1][0].toUpperCase();
+  if (userContext.isUserLoggedIn) {
+    const nameArray = userContext.user.name.split(" ");
+
+    initials += nameArray[0][0].toUpperCase();
+    initials += nameArray[nameArray.length - 1][0].toUpperCase();
+  }
+
+  const handleLogout = () => {
+    Cookies.remove("userId");
+    Cookies.remove("name");
+    Cookies.remove("email");
+    userContext.setUserLoggedIn(false);
+    userContext.setUser({
+      email: undefined,
+      name: undefined,
+      userId: undefined,
+    });
+  };
 
   return (
     <StyledDrawer variant="permanent" anchor="left">
@@ -58,11 +82,14 @@ const Navbar: React.FC = () => {
           {!userContext.isUserLoggedIn ? (
             <LoginRegister />
           ) : (
-            <Stack flexDirection="row" alignItems="center" gap={4}>
-              <InitialBox>{initials}</InitialBox>
-              <Typography variant="displayName">
-                {userContext.user.name}
-              </Typography>
+            <Stack gap={4}>
+              <Stack flexDirection="row" alignItems="center" gap={4}>
+                <InitialBox>{initials}</InitialBox>
+                <Typography variant="displayName">
+                  {userContext.user.name}
+                </Typography>
+              </Stack>
+              <StyledButton onClick={handleLogout}>Logout</StyledButton>
             </Stack>
           )}
         </Stack>

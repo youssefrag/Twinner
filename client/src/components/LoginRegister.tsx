@@ -32,7 +32,7 @@ const SubmitButton = styled(Button)(({ theme }) => ({
   padding: "0.5rem 1.2rem",
   color: "#fff",
   "&:hover": {
-    backgroundColor: theme.palette.primary.light,
+    backgroundColor: "#fff",
     color: theme.palette.primary.dark,
   },
 }));
