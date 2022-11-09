@@ -9,6 +9,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import MainTheme from "./theme";
 
 import Navbar from "./components/Navbar";
+import CreatePost from "./components/CreatePost";
 
 function App() {
   const [isUserLoggedIn, setUserLoggedIn] = useState<boolean>(false);
@@ -24,7 +25,7 @@ function App() {
   }, [userId]);
 
   return (
-    <div className="App">
+    <div className="App" style={{ backgroundColor: "#f2eefe" }}>
       <ThemeProvider theme={MainTheme}>
         <UserContextProvider
           name={name}
@@ -34,6 +35,7 @@ function App() {
           setUserLoggedIn={setUserLoggedIn}
         >
           <Navbar />
+          <CreatePost />
         </UserContextProvider>
       </ThemeProvider>
     </div>
