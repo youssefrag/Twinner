@@ -15,6 +15,7 @@ declare module "@mui/material/styles" {
     mainSubHeading: React.CSSProperties;
     switchPage: React.CSSProperties;
     displayName: React.CSSProperties;
+    characterCount: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
@@ -24,6 +25,7 @@ declare module "@mui/material/styles" {
     mainSubHeading: React.CSSProperties;
     switchPage: React.CSSProperties;
     displayName: React.CSSProperties;
+    characterCount: React.CSSProperties;
   }
 }
 
@@ -35,6 +37,7 @@ declare module "@mui/material/Typography" {
     mainSubHeading: true;
     switchPage: true;
     displayName: true;
+    characterCount: true;
   }
 }
 
@@ -78,6 +81,9 @@ const MainTheme = createTheme({
     displayName: {
       color: "#fff",
       fontSize: "1.2rem",
+    },
+    characterCount: {
+      color: "#302061",
     },
   },
   spacing: [2, 4, 8, 12, 16, 24, 32, 48, 64, 80, 96, 128, 160],
