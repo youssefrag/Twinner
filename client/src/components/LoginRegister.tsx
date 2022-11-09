@@ -4,6 +4,7 @@ import { UserContext } from "../context/UserContext";
 import EmailAlreadyExists from "../messages/EmailAlreadyExists";
 import MissingField from "../messages/MissingField";
 import EmailDoesNotExist from "../messages/EmailDoesNotExist";
+import PasswordsNotMatching from "../messages/PasswordsNotMatching";
 
 import Cookies from "js-cookie";
 
@@ -17,6 +18,7 @@ import {
 } from "@mui/material";
 
 import { styled } from "@mui/material/styles";
+import PasswordIncorrect from "../messages/PasswordIncorrect";
 
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.primary.light,
@@ -70,6 +72,8 @@ type Alerts = {
   emailAlreadyExists: boolean;
   missingField: boolean;
   emailDoesNotExist: boolean;
+  passwordsNotMatching: boolean;
+  passwordIncorrect: boolean;
 };
 
 const LoginRegister = () => {
@@ -79,6 +83,8 @@ const LoginRegister = () => {
     emailAlreadyExists: false,
     missingField: false,
     emailDoesNotExist: false,
+    passwordsNotMatching: false,
+    passwordIncorrect: false,
   });
 
   const resetAlerts = () => {
@@ -86,6 +92,8 @@ const LoginRegister = () => {
       emailAlreadyExists: false,
       missingField: false,
       emailDoesNotExist: false,
+      passwordsNotMatching: false,
+      passwordIncorrect: false,
     });
   };
 
@@ -135,6 +143,8 @@ const LoginRegister = () => {
         emailAlreadyExists: false,
         missingField: true,
         emailDoesNotExist: false,
+        passwordsNotMatching: false,
+        passwordIncorrect: false,
       });
       return;
     }
@@ -144,6 +154,8 @@ const LoginRegister = () => {
         emailAlreadyExists: false,
         missingField: true,
         emailDoesNotExist: false,
+        passwordsNotMatching: false,
+        passwordIncorrect: false,
       });
       return;
     }
@@ -161,11 +173,19 @@ const LoginRegister = () => {
         emailAlreadyExists: false,
         missingField: false,
         emailDoesNotExist: true,
+        passwordsNotMatching: false,
+        passwordIncorrect: false,
       });
       return;
     }
     if (password !== userDataDB.password) {
-      alert("wrong password");
+      setAlerts({
+        emailAlreadyExists: false,
+        missingField: false,
+        emailDoesNotExist: false,
+        passwordsNotMatching: false,
+        passwordIncorrect: true,
+      });
       return;
     }
     userContext.setUser({
@@ -203,6 +223,8 @@ const LoginRegister = () => {
         emailAlreadyExists: false,
         missingField: true,
         emailDoesNotExist: false,
+        passwordsNotMatching: false,
+        passwordIncorrect: false,
       });
       return;
     }
@@ -212,10 +234,18 @@ const LoginRegister = () => {
         emailAlreadyExists: false,
         missingField: true,
         emailDoesNotExist: false,
+        passwordsNotMatching: false,
+        passwordIncorrect: false,
       });
       return;
     } else if (password !== confirmPassword) {
-      alert("passwords are not matching");
+      setAlerts({
+        emailAlreadyExists: false,
+        missingField: false,
+        emailDoesNotExist: false,
+        passwordsNotMatching: true,
+        passwordIncorrect: false,
+      });
       return;
     }
     let response = await fetch("http://localhost:8080/profiles", {
@@ -235,6 +265,8 @@ const LoginRegister = () => {
         emailAlreadyExists: true,
         missingField: false,
         emailDoesNotExist: false,
+        passwordsNotMatching: false,
+        passwordIncorrect: false,
       });
       return;
     }
@@ -274,6 +306,7 @@ const LoginRegister = () => {
               </Typography>
               {alerts.missingField && <MissingField />}
               {alerts.emailDoesNotExist && <EmailDoesNotExist />}
+              {alerts.passwordIncorrect && <PasswordIncorrect />}
               <Stack gap={3} marginBottom={5}>
                 <StyledTextField
                   placeholder="Enter Email"
@@ -304,6 +337,7 @@ const LoginRegister = () => {
               </Typography>
               {alerts.emailAlreadyExists && <EmailAlreadyExists />}
               {alerts.missingField && <MissingField />}
+              {alerts.passwordsNotMatching && <PasswordsNotMatching />}
               <Stack gap={3} marginBottom={5}>
                 <StyledTextField
                   placeholder="Enter Name"
