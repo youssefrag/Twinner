@@ -21,18 +21,18 @@ app.post("/profiles", async (req, res) => {
     );
     res.json(newProfile);
   } catch (err) {
-    console.log(err.message);
+    res.json(err.message);
   }
 });
 
 //Get profile data for login
 
-app.get("/profile", async (req, res) => {
+app.get("/profile/:email", async (req, res) => {
+  const email = req.params.email;
   try {
-    const { email, password } = req.body;
     const profileData = await pool.query(
-      "SELECT * FROM profile WHERE email=$1 AND password=$2",
-      [email, password]
+      "SELECT * FROM profile WHERE email=$1",
+      [email]
     );
     res.json(profileData);
   } catch (err) {

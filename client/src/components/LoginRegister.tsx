@@ -100,6 +100,32 @@ const LoginRegister = () => {
       alert("Missing Field");
       return;
     }
+    let response = await fetch(
+      `http://localhost:8080/profile/${userLogin.email}`,
+      {
+        method: "GET",
+      }
+    );
+    let result = await response.json();
+    console.log(result.rows[0]);
+    const userDataDB = result.rows[0];
+    if (!userDataDB) {
+      alert("email does not exist");
+      return;
+    }
+    if (password !== userDataDB.password) {
+      alert("wrong password");
+      return;
+    }
+    userContext.setUser({
+      userId: userDataDB.id,
+      name: userDataDB.name,
+      email: userDataDB.email,
+    });
+    userContext.setUserLoggedIn(true);
+    Cookies.set("userId", userDataDB.id);
+    Cookies.set("name", userDataDB.name);
+    Cookies.set("email", userDataDB.email);
   };
 
   // Handle register data
@@ -141,16 +167,24 @@ const LoginRegister = () => {
       body: JSON.stringify(userRegister),
     });
     let result = await response.json();
-    console.log(result.rows[0]);
+    console.log(result);
+    if (
+      result ===
+      'duplicate key value violates unique constraint "profile_email_key"'
+    ) {
+      alert("email already exists");
+      return;
+    }
+    const userDataDB = result.rows[0];
     userContext.setUser({
-      userId: result.rows[0].id,
-      name: result.rows[0].name,
-      email: result.rows[0].email,
+      userId: userDataDB.id,
+      name: userDataDB.name,
+      email: userDataDB.email,
     });
     userContext.setUserLoggedIn(true);
-    Cookies.set("userId", result.rows[0].id);
-    Cookies.set("name", result.rows[0].name);
-    Cookies.set("email", result.rows[0].email);
+    Cookies.set("userId", userDataDB.id);
+    Cookies.set("name", userDataDB.name);
+    Cookies.set("email", userDataDB.email);
   };
 
   return (
