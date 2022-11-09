@@ -26,6 +26,15 @@ const StyledLogoIcon = styled(CampaignIcon)(({ theme }) => ({
 const Navbar: React.FC = () => {
   const userContext = useContext(UserContext);
 
+  const name = userContext.user.name;
+
+  const nameArray = name.split(" ");
+
+  let initials = "";
+
+  initials += nameArray[0][0].toUpperCase();
+  initials += nameArray[nameArray.length - 1][0].toUpperCase();
+
   return (
     <StyledDrawer variant="permanent" anchor="left">
       <Stack alignItems="center" marginTop={5} gap={7}>
@@ -38,7 +47,7 @@ const Navbar: React.FC = () => {
           {!userContext.isUserLoggedIn ? (
             <LoginRegister />
           ) : (
-            <Typography>{/* <>{userContext.user}</> */}</Typography>
+            <Typography>{userContext.user.name}</Typography>
           )}
         </Stack>
       </Stack>
