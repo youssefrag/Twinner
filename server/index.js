@@ -55,15 +55,23 @@ app.get("posts", async (req, res) => {
 
 app.post("/posts", async (req, res) => {
   try {
-    // console.log("route reached");
-    console.log(req.body);
-    // const { userId, content } = req.body;
-    // const post = await pool.query(
-    //   "INSERT INTO post (profile_id, content) VALUES($1, $2)",
-    //   [userId, content]
-    // );
+    const { content, selectedTags, userId } = req.body;
+    const post = await pool.query(
+      "INSERT INTO post (profile_id, content) VALUES($1, $2) RETURNING id",
+      [userId, content]
+    );
+    const postId = post.rows[0].id;
+    for (let i = 0; i < selectedTags.length; i++) {
+      const tagId = selectedTags[i].id;
+      await pool.query(
+        "INSERT INTO tag_post (post_id, tag_id) VALUES ($1, $2)",
+
+        [postId, tagId]
+      );
+    }
+    res.json("Post and tags succesfully added");
   } catch (err) {
-    console.error(err.message);
+    res.json(err.message);
   }
 });
 

@@ -80,10 +80,17 @@ const CreatePost = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ content: content, selectedTags: selectedTags }),
+      body: JSON.stringify({
+        content: content,
+        selectedTags: selectedTags,
+        userId: userContext.user.userId,
+      }),
     });
     let result = await response.json();
     console.log(result);
+    if (result === "Post and tags succesfully added") {
+      window.location.reload();
+    }
   };
 
   const getTags = async () => {
