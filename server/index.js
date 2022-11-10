@@ -68,7 +68,17 @@ app.post("/posts", async (req, res) => {
 //Create Tag
 
 app.post("/createTag", async (req, res) => {
-  console.log("route reached");
+  try {
+    const newTag = req.body.newTag;
+    await pool.query(
+      "INSERT INTO tag (name) VALUES ($1)",
+
+      [newTag]
+    );
+    res.json("Tag added succesfully");
+  } catch (err) {
+    res.json(err.message);
+  }
 });
 
 //Comment on post

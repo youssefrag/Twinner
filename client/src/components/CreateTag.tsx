@@ -81,6 +81,14 @@ const CreateTag = () => {
     });
     let result = await response.json();
     console.log(result);
+    if (
+      result === 'duplicate key value violates unique constraint "tag_name_key"'
+    ) {
+      handleCloseModal();
+    }
+    if (result === "Tag added succesfully") {
+      handleCloseModal();
+    }
   };
 
   return (
