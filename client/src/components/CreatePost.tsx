@@ -91,7 +91,9 @@ const CreatePost = () => {
               justifyContent="space-between"
               marginTop={6}
             >
-              <TagPosts />
+              <Box>
+                <TagPosts />
+              </Box>
               <StyledButton>POST</StyledButton>
             </Stack>
           </Stack>

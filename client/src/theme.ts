@@ -16,6 +16,7 @@ declare module "@mui/material/styles" {
     switchPage: React.CSSProperties;
     displayName: React.CSSProperties;
     characterCount: React.CSSProperties;
+    mainSecondary: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
@@ -26,6 +27,8 @@ declare module "@mui/material/styles" {
     switchPage: React.CSSProperties;
     displayName: React.CSSProperties;
     characterCount: React.CSSProperties;
+    addTags: React.CSSProperties;
+    mainSecondary: React.CSSProperties;
   }
 }
 
@@ -38,6 +41,8 @@ declare module "@mui/material/Typography" {
     switchPage: true;
     displayName: true;
     characterCount: true;
+    addTags: true;
+    mainSecondary: true;
   }
 }
 
@@ -84,6 +89,17 @@ const MainTheme = createTheme({
     },
     characterCount: {
       color: "#302061",
+    },
+    addTags: {
+      fontSize: "1.2rem",
+      fontWeight: 700,
+      color: "#302061",
+    },
+    mainSecondary: {
+      fontFamily: "Lato, sans-serif",
+      fontSize: "1.8rem",
+      color: "#302061",
+      fontWeight: 600,
     },
   },
   spacing: [2, 4, 8, 12, 16, 24, 32, 48, 64, 80, 96, 128, 160],
