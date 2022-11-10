@@ -7,6 +7,8 @@ import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 
 import { styled } from "@mui/material/styles";
 
+import { Tag } from "./../models";
+
 const StyledContainerBox = styled(Box)(({ theme }) => ({
   marginLeft: "300px",
   marginRight: "200px",
@@ -43,6 +45,7 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
+  alignSelf: "flex-end",
   backgroundColor: theme.palette.primary.dark,
   fontSize: "1.4rem",
   padding: "0.5rem 1.2rem",
@@ -56,9 +59,9 @@ const StyledButton = styled(Button)(({ theme }) => ({
 const CreatePost = () => {
   const userContext = useContext(UserContext);
 
-  let [tags, setTags] = useState<string[]>([]);
+  let [tags, setTags] = useState<Tag[]>([]);
 
-  let [selectedTags, setSelectedTags] = useState<string[]>([]);
+  let [selectedTags, setSelectedTags] = useState<Tag[]>([]);
 
   const getTags = async () => {
     let response = await fetch("http://localhost:8080/allTags", {
@@ -111,7 +114,12 @@ const CreatePost = () => {
               marginTop={6}
             >
               <Box>
-                <TagPosts tags={tags} />
+                <TagPosts
+                  tags={tags}
+                  setTags={setTags}
+                  selectedTags={selectedTags}
+                  setSelectedTags={setSelectedTags}
+                />
               </Box>
               <StyledButton>POST</StyledButton>
             </Stack>
