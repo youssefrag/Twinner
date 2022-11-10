@@ -88,6 +88,7 @@ const CreateTag = () => {
     }
     if (result === "Tag added succesfully") {
       handleCloseModal();
+      window.location.reload();
     }
   };
 

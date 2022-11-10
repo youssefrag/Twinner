@@ -63,6 +63,29 @@ const CreatePost = () => {
 
   let [selectedTags, setSelectedTags] = useState<Tag[]>([]);
 
+  let [content, setContent] = useState<string>("");
+
+  const handleContentChange = (e: React.FormEvent) => {
+    const element = e.currentTarget as HTMLInputElement;
+    const value = element.value;
+    setContent(value);
+  };
+
+  const handlePostSubmit = async () => {
+    if (content === "") {
+      return;
+    }
+    let response = await fetch("http://localhost:8080/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ content: content, selectedTags: selectedTags }),
+    });
+    let result = await response.json();
+    console.log(result);
+  };
+
   const getTags = async () => {
     let response = await fetch("http://localhost:8080/allTags", {
       method: "GET",
@@ -92,6 +115,7 @@ const CreatePost = () => {
           <InitialBox>{initials}</InitialBox>
           <Stack sx={{ flex: 1 }}>
             <StyledTextField
+              onChange={handleContentChange}
               multiline
               minRows={2}
               maxRows={4}
@@ -106,7 +130,7 @@ const CreatePost = () => {
               }}
               variant="characterCount"
             >
-              /300 characters
+              {content.length}/300 characters
             </Typography>
             <Stack
               flexDirection="row"
@@ -121,7 +145,7 @@ const CreatePost = () => {
                   setSelectedTags={setSelectedTags}
                 />
               </Box>
-              <StyledButton>POST</StyledButton>
+              <StyledButton onClick={handlePostSubmit}>POST</StyledButton>
             </Stack>
           </Stack>
         </Stack>

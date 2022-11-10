@@ -55,11 +55,13 @@ app.get("posts", async (req, res) => {
 
 app.post("/posts", async (req, res) => {
   try {
-    const { userId, content } = req.body;
-    const post = await pool.query(
-      "INSERT INTO post (profile_id, content) VALUES($1, $2)",
-      [userId, content]
-    );
+    // console.log("route reached");
+    console.log(req.body);
+    // const { userId, content } = req.body;
+    // const post = await pool.query(
+    //   "INSERT INTO post (profile_id, content) VALUES($1, $2)",
+    //   [userId, content]
+    // );
   } catch (err) {
     console.error(err.message);
   }
