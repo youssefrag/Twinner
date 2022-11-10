@@ -29,6 +29,14 @@ const StyledTagBox = styled(Box)(({ theme }) => ({
   cursor: "pointer",
 }));
 
+const SelectedTagBox = styled(Box)(({ theme }) => ({
+  border: "1px solid",
+  padding: "0.2rem 0.8rem",
+  borderRadius: "50px",
+  cursor: "pointer",
+  backgroundColor: theme.palette.primary.dark,
+}));
+
 const TagPosts: React.FC<Props> = ({
   tags,
   setTags,
@@ -39,11 +47,23 @@ const TagPosts: React.FC<Props> = ({
     setSelectedTags([...selectedTags, tag]);
   };
 
-  const renderTags = tags.map((tag) => (
-    <StyledTagBox onClick={() => addToSelected(tag)}>
-      <Typography variant="displayTags">{tag.name}</Typography>
-    </StyledTagBox>
-  ));
+  const renderTags = tags.map((tag) => {
+    if (!selectedTags.includes(tag)) {
+      return (
+        <StyledTagBox onClick={() => addToSelected(tag)}>
+          <Typography variant="displayTags">{tag.name}</Typography>
+        </StyledTagBox>
+      );
+    } else if (selectedTags.includes(tag)) {
+      return (
+        <SelectedTagBox>
+          <Typography variant="displayTags" color="#fff">
+            {tag.name}
+          </Typography>
+        </SelectedTagBox>
+      );
+    }
+  });
 
   return (
     <>
