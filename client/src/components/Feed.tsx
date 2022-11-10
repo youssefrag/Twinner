@@ -4,6 +4,8 @@ import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 
 import { styled } from "@mui/material/styles";
 
+import PostDisplay from "./PostDisplay";
+
 import { Tag } from "./../models";
 import { Post } from "./../models";
 import { Profile } from "./../models";
@@ -29,7 +31,6 @@ const Feed = () => {
       },
     });
     let result = await response.json();
-    // console.log(result);
     const tag_posts = result.tags;
     const dbPosts = result.posts;
     let postsArray = [];
@@ -58,16 +59,13 @@ const Feed = () => {
       let tagsArray = [];
 
       for (let j = 0; j < tag_posts.length; j++) {
-        // console.log(tag_posts[j]);
         if (tag_posts[j].post_id === dbPosts[i].id) {
           let tagObj: Tag = { id: "", name: "" };
           tagObj.id = tag_posts[j].tag_id;
           tagObj.name = tag_posts[j].name;
-          //   console.log(tagObj);
           tagsArray.push(tagObj);
         }
       }
-      //   console.log(tagsArray);
       postObj.tags = tagsArray;
 
       postsArray.push(postObj);
@@ -79,9 +77,14 @@ const Feed = () => {
     getAllPostsAndProfiles();
   }, []);
 
+  const renderPosts = posts.map((post) => {
+    return <PostDisplay post={post} />;
+  });
+
   return (
     <StyledContainerBox>
       <Typography variant="mainSubHeading">Feed</Typography>
+      {renderPosts}
     </StyledContainerBox>
   );
 };
