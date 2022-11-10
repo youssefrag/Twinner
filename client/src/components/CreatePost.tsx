@@ -87,7 +87,6 @@ const CreatePost = () => {
       }),
     });
     let result = await response.json();
-    console.log(result);
     if (result === "Post and tags succesfully added") {
       window.location.reload();
     }

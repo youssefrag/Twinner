@@ -10,6 +10,7 @@ import MainTheme from "./theme";
 
 import Navbar from "./components/Navbar";
 import CreatePost from "./components/CreatePost";
+import Feed from "./components/Feed";
 
 function App() {
   const [isUserLoggedIn, setUserLoggedIn] = useState<boolean>(false);
@@ -36,6 +37,7 @@ function App() {
         >
           <Navbar />
           <CreatePost />
+          <Feed />
         </UserContextProvider>
       </ThemeProvider>
     </div>

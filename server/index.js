@@ -42,12 +42,16 @@ app.get("/profile/:email", async (req, res) => {
 
 //Get all posts
 
-app.get("posts", async (req, res) => {
+app.get("/posts", async (req, res) => {
   try {
-    const posts = await pool.query("SELECT * FROM post;");
-    res.json(posts);
+    const posts = await pool.query(
+      "SELECT post.content, post.post_date, profile.name FROM post INNER JOIN profile ON post.profile_id = profile.id ORDER BY post.post_date DESC"
+    );
+
+    res.json({ posts: posts.rows });
   } catch (err) {
     console.log(err.message);
+    res.json(err.message);
   }
 });
 
