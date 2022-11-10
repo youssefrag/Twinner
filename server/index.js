@@ -65,6 +65,12 @@ app.post("/posts", async (req, res) => {
   }
 });
 
+//Create Tag
+
+app.post("/createTag", async (req, res) => {
+  console.log("route reached");
+});
+
 //Comment on post
 
 //React to post

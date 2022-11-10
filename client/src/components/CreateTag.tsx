@@ -43,7 +43,7 @@ const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "30rem",
+  width: "24rem",
   bgcolor: "#f2eefe",
   boxShadow: 24,
   p: 4,
@@ -52,12 +52,36 @@ const modalStyle = {
 };
 
 const CreateTag = () => {
-  const [newTag, setNewTag] = useState<string>("");
-
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const handleOpenMOdal = () => setOpenModal(true);
-  const handleCloseModal = () => setOpenModal(false);
+  const handleCloseModal = () => {
+    setNewTag("");
+    setOpenModal(false);
+  };
+
+  const [newTag, setNewTag] = useState<string>("");
+
+  const handleNewTagChange = (e: React.FormEvent) => {
+    const element = e.currentTarget as HTMLInputElement;
+    const value = element.value;
+    setNewTag(value);
+  };
+
+  const handleNewTagSubmit = async () => {
+    if (!newTag) {
+      return;
+    }
+    let response = await fetch("http://localhost:8080/createTag", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ newTag }),
+    });
+    let result = await response.json();
+    console.log(result);
+  };
 
   return (
     <>
@@ -71,8 +95,11 @@ const CreateTag = () => {
         <Box sx={modalStyle}>
           <Stack gap={6}>
             <Typography variant="mainSecondary">Create Tag</Typography>
-            <StyledTextField />
-            <SubmitButton>Add Tag</SubmitButton>
+            <StyledTextField
+              inputProps={{ maxLength: 20 }}
+              onChange={handleNewTagChange}
+            />
+            <SubmitButton onClick={handleNewTagSubmit}>Add Tag</SubmitButton>
           </Stack>
         </Box>
       </Modal>
