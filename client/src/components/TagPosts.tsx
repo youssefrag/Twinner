@@ -48,13 +48,9 @@ const TagPosts: React.FC<Props> = ({
   };
 
   const removeFromSelected = (tag: Tag) => {
-    // console.log(selectedTags);
-    const index = selectedTags.indexOf(tag);
-    // console.log(index);
-
-    console.log(selectedTags);
-    const newSelectedTags = selectedTags;
-    console.log(newSelectedTags);
+    const newSelectedTags = selectedTags.filter(
+      (currentTag) => currentTag !== tag
+    );
     setSelectedTags(newSelectedTags);
   };
 
