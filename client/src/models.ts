@@ -5,10 +5,10 @@ export interface Tag {
 
 export interface Post {
   id: string;
-  authorId: string;
   authorName: string;
   authorInitials: string;
   content: string;
+  date: Date;
   tags: Tag[];
 }
 

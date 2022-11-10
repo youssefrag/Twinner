@@ -29,7 +29,50 @@ const Feed = () => {
       },
     });
     let result = await response.json();
-    console.log(result);
+    // console.log(result);
+    const tag_posts = result.tags;
+    const dbPosts = result.posts;
+    let postsArray = [];
+    for (let i = 0; i < dbPosts.length; i++) {
+      let postObj: Post = {
+        id: "",
+        authorName: "",
+        authorInitials: "",
+        content: "",
+        tags: [],
+        date: undefined,
+      };
+      postObj.id = dbPosts[i].id;
+      postObj.authorName = dbPosts[i].name;
+
+      let initials = "";
+      let nameArray = dbPosts[i].name.split(" ");
+      initials += nameArray[0][0].toUpperCase();
+      initials += nameArray[nameArray.length - 1][0].toUpperCase();
+      postObj.authorInitials = initials;
+
+      postObj.content = dbPosts[i].content;
+
+      postObj.date = new Date(dbPosts[i].post_date);
+
+      let tagsArray = [];
+
+      for (let j = 0; j < tag_posts.length; j++) {
+        // console.log(tag_posts[j]);
+        if (tag_posts[j].post_id === dbPosts[i].id) {
+          let tagObj: Tag = { id: "", name: "" };
+          tagObj.id = tag_posts[j].tag_id;
+          tagObj.name = tag_posts[j].name;
+          //   console.log(tagObj);
+          tagsArray.push(tagObj);
+        }
+      }
+      //   console.log(tagsArray);
+      postObj.tags = tagsArray;
+
+      postsArray.push(postObj);
+    }
+    setPosts(postsArray);
   };
 
   useEffect(() => {
