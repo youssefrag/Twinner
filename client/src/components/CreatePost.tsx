@@ -118,7 +118,8 @@ const CreatePost = () => {
 
     return (
       <StyledContainerBox>
-        <Stack flexDirection="row" alignItems="center" gap={5}>
+        <Typography variant="mainSubHeading">Create Post</Typography>
+        <Stack flexDirection="row" alignItems="center" gap={5} marginTop={7}>
           <InitialBox>{initials}</InitialBox>
           <Stack sx={{ flex: 1 }}>
             <StyledTextField

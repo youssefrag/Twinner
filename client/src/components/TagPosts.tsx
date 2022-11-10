@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import {
   Box,
@@ -69,13 +69,21 @@ const TagPosts: React.FC<Props> = ({
           </Typography>
         </SelectedTagBox>
       );
+    } else {
+      return <></>;
     }
   });
 
   return (
     <>
       <Typography variant="addTags">Add tags to your post</Typography>
-      <Stack flexDirection="row" alignItems="center" gap={3} marginTop={5}>
+      <Stack
+        flexDirection="row"
+        alignItems="center"
+        gap={3}
+        marginTop={5}
+        flexWrap="wrap"
+      >
         {renderTags}
         <CreateTag />
       </Stack>
