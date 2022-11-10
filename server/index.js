@@ -81,6 +81,17 @@ app.post("/createTag", async (req, res) => {
   }
 });
 
+//Get Tags
+
+app.get("/allTags", async (req, res) => {
+  try {
+    const allTags = await pool.query("SELECT * FROM tag");
+    res.json(allTags);
+  } catch (err) {
+    res.json(err.message);
+  }
+});
+
 //Comment on post
 
 //React to post

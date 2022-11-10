@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 
 import TagPosts from "./TagPosts";
@@ -56,6 +56,25 @@ const StyledButton = styled(Button)(({ theme }) => ({
 const CreatePost = () => {
   const userContext = useContext(UserContext);
 
+  let [tags, setTags] = useState<string[]>([]);
+
+  let [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  const getTags = async () => {
+    let response = await fetch("http://localhost:8080/allTags", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    let result = await response.json();
+    setTags(result.rows);
+  };
+
+  useEffect(() => {
+    getTags();
+  }, []);
+
   if (userContext.isUserLoggedIn) {
     let initials = "";
 
@@ -92,7 +111,7 @@ const CreatePost = () => {
               marginTop={6}
             >
               <Box>
-                <TagPosts />
+                <TagPosts tags={tags} />
               </Box>
               <StyledButton>POST</StyledButton>
             </Stack>
