@@ -47,16 +47,27 @@ const TagPosts: React.FC<Props> = ({
     setSelectedTags([...selectedTags, tag]);
   };
 
+  const removeFromSelected = (tag: Tag) => {
+    // console.log(selectedTags);
+    const index = selectedTags.indexOf(tag);
+    // console.log(index);
+
+    console.log(selectedTags);
+    const newSelectedTags = selectedTags;
+    console.log(newSelectedTags);
+    setSelectedTags(newSelectedTags);
+  };
+
   const renderTags = tags.map((tag) => {
     if (!selectedTags.includes(tag)) {
       return (
-        <StyledTagBox onClick={() => addToSelected(tag)}>
+        <StyledTagBox key={tag.id} onClick={() => addToSelected(tag)}>
           <Typography variant="displayTags">{tag.name}</Typography>
         </StyledTagBox>
       );
     } else if (selectedTags.includes(tag)) {
       return (
-        <SelectedTagBox>
+        <SelectedTagBox key={tag.id} onClick={() => removeFromSelected(tag)}>
           <Typography variant="displayTags" color="#fff">
             {tag.name}
           </Typography>
