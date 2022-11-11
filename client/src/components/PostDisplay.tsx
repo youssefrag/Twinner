@@ -1,4 +1,5 @@
-import React from "react";
+import { useState, useContext, useEffect } from "react";
+import { UserContext } from "../context/UserContext";
 
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 
@@ -22,6 +23,7 @@ const LikeAction = styled(Stack)(({ theme }) => ({
   borderRight: "1px solid",
   paddingRight: "4rem",
   paddingLeft: "1rem",
+  cursor: "pointer",
 }));
 
 const CommentAction = styled(Stack)(({ theme }) => ({
@@ -56,7 +58,26 @@ interface Props {
 const PostDisplay: React.FC<Props> = ({ post }) => {
   const { authorInitials, authorName, content, date, id, tags } = post;
 
+  const userContext = useContext(UserContext);
+
+  console.log(userContext.user.userId);
+
   const dateString = date.toString().slice(0, 15);
+
+  const handleLike = async () => {
+    let response = await fetch("http://localhost:8080/like-post", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        postId: id,
+        userId: userContext.user.userId,
+      }),
+    });
+    let result = await response.json();
+    console.log(result);
+  };
 
   const renderTags = tags.map((tag) => {
     return (
