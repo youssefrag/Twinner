@@ -5,6 +5,8 @@ import { Comment } from "../models";
 
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 
+import DeleteIcon from "@mui/icons-material/Delete";
+
 import { styled } from "@mui/material/styles";
 
 const MainContainer = styled(Stack)(({ theme }) => ({
@@ -153,19 +155,21 @@ const CommentSection = ({ postId }: Props) => {
       comment;
     return (
       <Stack
+        key={id}
         flexDirection="row"
-        gap={6}
-        alignItems="center"
-        key={comment.id}
+        justifyContent="space-between"
         sx={{ borderBottom: "1px solid", paddingBottom: 7 }}
       >
-        <InitialBox>{authorInitials}</InitialBox>
-        <Stack gap={3}>
-          <Typography variant="addCommentLike">{authorName}</Typography>
-          <Typography sx={{ color: "#302061", fontSize: "1.1rem" }}>
-            {content}
-          </Typography>
+        <Stack flexDirection="row" gap={6} alignItems="center" key={comment.id}>
+          <InitialBox>{authorInitials}</InitialBox>
+          <Stack gap={3}>
+            <Typography variant="addCommentLike">{authorName}</Typography>
+            <Typography sx={{ color: "#302061", fontSize: "1.1rem" }}>
+              {content}
+            </Typography>
+          </Stack>
         </Stack>
+        {userContext.user.userId == authorId && <DeleteIcon />}
       </Stack>
     );
   });
