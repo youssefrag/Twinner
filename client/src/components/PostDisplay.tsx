@@ -60,7 +60,7 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
 
   const renderTags = tags.map((tag) => {
     return (
-      <TagBox>
+      <TagBox key={tag.id}>
         <Typography variant="displayTags" color="#fff">
           {tag.name}
         </Typography>
