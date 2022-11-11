@@ -37,6 +37,7 @@ const Feed = () => {
     for (let i = 0; i < dbPosts.length; i++) {
       let postObj: Post = {
         id: "",
+        authorId: "",
         authorName: "",
         authorInitials: "",
         content: "",
@@ -45,6 +46,7 @@ const Feed = () => {
       };
       postObj.id = dbPosts[i].id;
       postObj.authorName = dbPosts[i].name;
+      postObj.authorId = dbPosts[i].profile_id;
 
       let initials = "";
       let nameArray = dbPosts[i].name.split(" ");

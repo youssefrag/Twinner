@@ -7,6 +7,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
+import DeleteIcon from "@mui/icons-material/Delete";
+
 import CommentIcon from "@mui/icons-material/Comment";
 
 import { Post } from "../models";
@@ -62,7 +64,8 @@ interface Props {
 }
 
 const PostDisplay: React.FC<Props> = ({ post }) => {
-  const { authorInitials, authorName, content, date, id, tags } = post;
+  const { authorId, authorInitials, authorName, content, date, id, tags } =
+    post;
 
   const dateString = date.toString().slice(0, 15);
 
@@ -109,7 +112,6 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
   };
 
   const handleRemoveLike = async () => {
-    console.log("remove like");
     let response = await fetch("http://localhost:8080/remove-like", {
       method: "DELETE",
       headers: {
@@ -121,8 +123,31 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
       }),
     });
     const result = await response.json();
-    console.log(result);
+    if (result === "like removed succesfully") {
+      const likesAfterRemoving = likes.filter(
+        (user) => user !== userContext.user.userId
+      );
+      setLikes(likesAfterRemoving);
+    }
   };
+
+  // DELETE POST FUNCTIONALITY
+
+  const deletePost = async () => {
+    let response = await fetch(`http://localhost:8080/post/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    console.log(result);
+    if (result === "post removed succesfully") {
+      window.location.reload();
+    }
+  };
+
+  // RENDER TAGS
 
   const renderTags = tags.map((tag) => {
     return (
@@ -143,7 +168,19 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
           <Typography variant="displayTags">{dateString}</Typography>
         </Stack>
       </Stack>
-      <Typography variant="postContent">{content}</Typography>
+      <Stack
+        flexDirection="row"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Typography variant="postContent">{content}</Typography>
+        {authorId.toString() === userContext.user.userId && (
+          <DeleteIcon
+            sx={{ height: "5rem", width: "5rem", cursor: "pointer" }}
+            onClick={deletePost}
+          />
+        )}
+      </Stack>
       <Stack flexDirection="row" gap={3}>
         {renderTags}
       </Stack>
@@ -155,7 +192,9 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
             gap={4}
             onClick={handleRemoveLike}
           >
-            <FavoriteIcon />
+            <FavoriteIcon
+              sx={{ color: "primary.dark", height: "2rem", width: "2rem" }}
+            />
             <Typography variant="addCommentLike">
               Likes ({likes.length})
             </Typography>

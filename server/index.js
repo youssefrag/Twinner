@@ -45,7 +45,7 @@ app.get("/profile/:email", async (req, res) => {
 app.get("/posts", async (req, res) => {
   try {
     const posts = await pool.query(
-      "SELECT post.id, post.content, post.post_date, profile.name FROM post JOIN profile ON post.profile_id = profile.id ORDER BY post.post_date DESC"
+      "SELECT post.profile_id, post.id, post.content, post.post_date, profile.name FROM post JOIN profile ON post.profile_id = profile.id ORDER BY post.post_date DESC"
     );
     const tags = await pool.query(
       "SELECT post.id as post_id, tag_post.tag_id, tag.name FROM post JOIN tag_post ON post.id = tag_post.post_id JOIN tag ON tag.id = tag_post.tag_id"
@@ -147,7 +147,6 @@ app.get("/likes/:postId", async (req, res) => {
 //Delete like
 
 app.delete("/remove-like", async (req, res) => {
-  console.log("route reached");
   try {
     const { postId, userId } = req.body;
     await pool.query(
@@ -161,9 +160,23 @@ app.delete("/remove-like", async (req, res) => {
   }
 });
 
-//Comment on post
-
 //Delete post
+
+app.delete("/post/:postId", async (req, res) => {
+  try {
+    const { postId } = req.params;
+    await pool.query(
+      "DELETE FROM post WHERE id=$1",
+
+      [postId]
+    );
+    res.json("post removed succesfully");
+  } catch (err) {
+    res.json(err.message);
+  }
+});
+
+//Comment on post
 
 //Delete comment
 
