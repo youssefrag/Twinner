@@ -108,15 +108,49 @@ app.get("/allTags", async (req, res) => {
   }
 });
 
-//Comment on post
+//Like post
 
-//React to post
+app.post("/like-post", async (req, res) => {
+  try {
+    const { postId, userId } = req.body;
+    await pool.query(
+      "INSERT INTO likes (post_id, profile_id) VALUES ($1, $2)",
+
+      [postId, userId]
+    );
+    res.json("like added succesfully");
+  } catch (errs) {
+    res.json(err.message);
+  }
+});
+
+//Get likes for post
+
+app.get("/likes/:postId", async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const postIdNum = Number(postId);
+    const likes = await pool.query("SELECT * FROM likes WHERE post_id=$1", [
+      postIdNum,
+    ]);
+    const likesArray = [];
+    for (let i = 0; i < likes.rows.length; i++) {
+      likesArray.push(likes.rows[i].profile_id.toString());
+    }
+    res.json(likesArray);
+  } catch (err) {
+    console.log(err.message);
+    res.json(err.message);
+  }
+});
+
+//Delete like
+
+//Comment on post
 
 //Delete post
 
 //Delete comment
-
-//Delete reaction
 
 app.listen(8080, () => {
   console.log(`Server has started on port ${PORT} 👍`);
