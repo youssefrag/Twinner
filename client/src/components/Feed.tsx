@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Box, Button, Stack, TextField, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import { styled } from "@mui/material/styles";
 
@@ -78,7 +78,7 @@ const Feed = () => {
   }, []);
 
   const renderPosts = posts.map((post) => {
-    return <PostDisplay post={post} />;
+    return <PostDisplay key={post.id} post={post} />;
   });
 
   return (

@@ -18,6 +18,7 @@ declare module "@mui/material/styles" {
     characterCount: React.CSSProperties;
     mainSecondary: React.CSSProperties;
     displayTags: React.CSSProperties;
+    authorName: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
@@ -31,6 +32,7 @@ declare module "@mui/material/styles" {
     addTags: React.CSSProperties;
     mainSecondary: React.CSSProperties;
     displayTags: React.CSSProperties;
+    authorName: React.CSSProperties;
   }
 }
 
@@ -46,6 +48,7 @@ declare module "@mui/material/Typography" {
     addTags: true;
     mainSecondary: true;
     displayTags: true;
+    authorName: true;
   }
 }
 
@@ -107,6 +110,10 @@ const MainTheme = createTheme({
     displayTags: {
       color: "#302061",
       fontSize: "0.8rem",
+    },
+    authorName: {
+      fontSize: "1.2rem",
+      fontWeight: 600,
     },
   },
   spacing: [2, 4, 8, 12, 16, 24, 32, 48, 64, 80, 96, 128, 160],
