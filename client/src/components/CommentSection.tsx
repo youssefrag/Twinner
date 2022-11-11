@@ -1,5 +1,7 @@
-import { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
+
+import { Comment } from "../models";
 
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 
@@ -63,18 +65,48 @@ const CommentSection = ({ postId }: Props) => {
   initials += nameArray[0][0].toUpperCase();
   initials += nameArray[nameArray.length - 1][0].toUpperCase();
 
-  console.log(initials);
+  // Handle post comment
+
+  const [postComment, setPostComment] = useState<string>("{}");
+
+  const handleChangePostComment = (e: React.FormEvent) => {
+    const element = e.currentTarget as HTMLInputElement;
+    const value = element.value;
+    setPostComment(value);
+  };
+
+  // Handle submit comment
+
+  const handleSubmitComment = async () => {
+    if (!postComment) {
+      return;
+    }
+    let response = await fetch("http://localhost:8080/add-comment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        postComment,
+        postId,
+        userId: userContext.user.userId,
+      }),
+    });
+    const result = await response.json();
+    console.log(result);
+  };
+
   return (
     <MainContainer>
       {userContext.isUserLoggedIn && (
         <Stack flexDirection="row" gap={3} alignItems="center">
           <InitialBox>{initials}</InitialBox>
           <StyledTextField
-            // onChange={handleContentChange}
+            onChange={handleChangePostComment}
             placeholder="Write a comment..."
             inputProps={{ maxLength: 150 }}
           />
-          <StyledButton>Add comment</StyledButton>
+          <StyledButton onClick={handleSubmitComment}>Add comment</StyledButton>
         </Stack>
       )}
     </MainContainer>

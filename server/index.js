@@ -178,6 +178,20 @@ app.delete("/post/:postId", async (req, res) => {
 
 //Comment on post
 
+app.post("/add-comment", async (req, res) => {
+  try {
+    const { postComment, postId, userId } = req.body;
+    await pool.query(
+      "INSERT INTO comment (profile_id, post_id, content) VALUES ($1, $2, $3)",
+      [userId, postId, postComment]
+    );
+    res.json("Comment added succesfully");
+  } catch (err) {
+    console.log(err.message);
+    res.json(err.message);
+  }
+});
+
 //Delete comment
 
 app.listen(8080, () => {
