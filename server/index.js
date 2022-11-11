@@ -146,6 +146,21 @@ app.get("/likes/:postId", async (req, res) => {
 
 //Delete like
 
+app.delete("/remove-like", async (req, res) => {
+  console.log("route reached");
+  try {
+    const { postId, userId } = req.body;
+    await pool.query(
+      "DELETE FROM likes WHERE post_id=$1 AND profile_id=$2",
+
+      [postId, userId]
+    );
+    res.json("like removed succesfully");
+  } catch (errs) {
+    res.json(err.message);
+  }
+});
+
 //Comment on post
 
 //Delete post

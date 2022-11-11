@@ -68,6 +68,8 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
 
   const userContext = useContext(UserContext);
 
+  // HANDLE LIKES
+
   const [likes, setLikes] = useState<string[]>([]);
 
   const getLikes = async () => {
@@ -101,10 +103,25 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
       }),
     });
     const result = await response.json();
-    // console.log(result);
     if (result === "like added succesfully") {
       setLikes([...likes, userContext.user.userId]);
     }
+  };
+
+  const handleRemoveLike = async () => {
+    console.log("remove like");
+    let response = await fetch("http://localhost:8080/remove-like", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        postId: id,
+        userId: userContext.user.userId,
+      }),
+    });
+    const result = await response.json();
+    console.log(result);
   };
 
   const renderTags = tags.map((tag) => {
@@ -132,7 +149,12 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
       </Stack>
       <Stack flexDirection="row" gap={8} marginTop={5}>
         {likes.includes(userContext.user.userId) ? (
-          <DislikeAction flexDirection="row" alignItems="center" gap={4}>
+          <DislikeAction
+            flexDirection="row"
+            alignItems="center"
+            gap={4}
+            onClick={handleRemoveLike}
+          >
             <FavoriteIcon />
             <Typography variant="addCommentLike">
               Likes ({likes.length})
