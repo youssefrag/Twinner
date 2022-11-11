@@ -25,4 +25,5 @@ export interface Comment {
   authorId: string;
   authorName: string;
   authorInitials: string;
+  content: string;
 }

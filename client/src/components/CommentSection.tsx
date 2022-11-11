@@ -112,7 +112,27 @@ const CommentSection = ({ postId }: Props) => {
       },
     });
     const result = await response.json();
-    console.log(result.rows);
+    let commentsArray = [];
+    // console.log(result.rows);
+    for (let i = 0; i < result.rows.length; i++) {
+      let initials = "";
+
+      const nameArray = result.rows[i].name.split(" ");
+
+      initials += nameArray[0][0].toUpperCase();
+      initials += nameArray[nameArray.length - 1][0].toUpperCase();
+
+      let commentObj: Comment = {
+        id: result.rows[i].id,
+        postId,
+        authorId: result.rows[i].profile_id,
+        authorName: result.rows[i].name,
+        authorInitials: initials,
+        content: result.rows[i].content,
+      };
+      commentsArray.push(commentObj);
+    }
+    setComments(commentsArray);
   };
 
   useEffect(() => {
