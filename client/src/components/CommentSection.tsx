@@ -24,6 +24,12 @@ const InitialBox = styled(Box)(({ theme }) => ({
   borderRadius: "50%",
 }));
 
+const CommentBox = styled(Stack)(({ theme }) => ({
+  paddingLeft: "3rem",
+  marginTop: "4rem",
+  //   borderBottom: "1px solid",
+}));
+
 const StyledTextField = styled(TextField)(({ theme }) => ({
   width: "50%",
   "& .MuiOutlinedInput-root": {
@@ -113,7 +119,6 @@ const CommentSection = ({ postId }: Props) => {
     });
     const result = await response.json();
     let commentsArray = [];
-    // console.log(result.rows);
     for (let i = 0; i < result.rows.length; i++) {
       let initials = "";
 
@@ -139,19 +144,50 @@ const CommentSection = ({ postId }: Props) => {
     getAllComments();
   }, []);
 
+  // Render Comments Component
+
+  const renderComments = comments.map((comment) => {
+    console.log(comment);
+
+    const { id, postId, authorId, authorName, authorInitials, content } =
+      comment;
+    return (
+      <Stack
+        flexDirection="row"
+        gap={6}
+        alignItems="center"
+        key={comment.id}
+        sx={{ borderBottom: "1px solid", paddingBottom: 7 }}
+      >
+        <InitialBox>{authorInitials}</InitialBox>
+        <Stack gap={3}>
+          <Typography variant="addCommentLike">{authorName}</Typography>
+          <Typography sx={{ color: "#302061", fontSize: "1.1rem" }}>
+            {content}
+          </Typography>
+        </Stack>
+      </Stack>
+    );
+  });
+
   return (
     <MainContainer>
-      {userContext.isUserLoggedIn && (
-        <Stack flexDirection="row" gap={3} alignItems="center">
-          <InitialBox>{initials}</InitialBox>
-          <StyledTextField
-            onChange={handleChangePostComment}
-            placeholder="Write a comment..."
-            inputProps={{ maxLength: 150 }}
-          />
-          <StyledButton onClick={handleSubmitComment}>Add comment</StyledButton>
-        </Stack>
-      )}
+      <>
+        {userContext.isUserLoggedIn && (
+          <Stack flexDirection="row" gap={3} alignItems="center">
+            <InitialBox>{initials}</InitialBox>
+            <StyledTextField
+              onChange={handleChangePostComment}
+              placeholder="Write a comment..."
+              inputProps={{ maxLength: 150 }}
+            />
+            <StyledButton onClick={handleSubmitComment}>
+              Add comment
+            </StyledButton>
+          </Stack>
+        )}
+        <CommentBox gap={8}>{renderComments}</CommentBox>
+      </>
     </MainContainer>
   );
 };
