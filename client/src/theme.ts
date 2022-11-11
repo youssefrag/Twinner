@@ -19,6 +19,8 @@ declare module "@mui/material/styles" {
     mainSecondary: React.CSSProperties;
     displayTags: React.CSSProperties;
     authorName: React.CSSProperties;
+    addCommentLike: React.CSSProperties;
+    postContent: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
@@ -33,6 +35,8 @@ declare module "@mui/material/styles" {
     mainSecondary: React.CSSProperties;
     displayTags: React.CSSProperties;
     authorName: React.CSSProperties;
+    addCommentLike: React.CSSProperties;
+    postContent: React.CSSProperties;
   }
 }
 
@@ -49,6 +53,8 @@ declare module "@mui/material/Typography" {
     mainSecondary: true;
     displayTags: true;
     authorName: true;
+    addCommentLike: true;
+    postContent: true;
   }
 }
 
@@ -114,6 +120,17 @@ const MainTheme = createTheme({
     authorName: {
       fontSize: "1.2rem",
       fontWeight: 600,
+    },
+    addCommentLike: {
+      fontSize: "1.3rem",
+      color: "#302061",
+      fontWeight: 600,
+    },
+    postContent: {
+      fontFamily: "Lato, sans-serif",
+      fontSize: "2rem",
+      color: "#302061",
+      fontWeight: 500,
     },
   },
   spacing: [2, 4, 8, 12, 16, 24, 32, 48, 64, 80, 96, 128, 160],
