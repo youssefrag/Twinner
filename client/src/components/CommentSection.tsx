@@ -60,10 +60,12 @@ const CommentSection = ({ postId }: Props) => {
 
   let initials = "";
 
-  const nameArray = userContext.user.name.split(" ");
+  if (userContext.user.name) {
+    const nameArray = userContext.user.name.split(" ");
 
-  initials += nameArray[0][0].toUpperCase();
-  initials += nameArray[nameArray.length - 1][0].toUpperCase();
+    initials += nameArray[0][0].toUpperCase();
+    initials += nameArray[nameArray.length - 1][0].toUpperCase();
+  }
 
   // Handle post comment
 
@@ -93,8 +95,12 @@ const CommentSection = ({ postId }: Props) => {
       }),
     });
     const result = await response.json();
-    console.log(result);
+    if (result === "Comment added succesfully") {
+      window.location.reload();
+    }
   };
+
+  // Handle get
 
   return (
     <MainContainer>

@@ -91,7 +91,7 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
 
   useEffect(() => {
     getLikes();
-  }, []);
+  }, [userContext, authorId]);
 
   const handleLike = async () => {
     if (!userContext.user.userId) {
@@ -166,6 +166,9 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
     );
   });
 
+  console.log(typeof authorId.toString());
+  console.log(typeof userContext.user.userId);
+  // console.log(authorId.toString() === userContext.user.userId);
   return (
     <PostContainer gap={6}>
       <Stack flexDirection="row" alignItems="center" gap={4}>
@@ -181,7 +184,7 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
         alignItems="center"
       >
         <Typography variant="postContent">{content}</Typography>
-        {authorId.toString() === userContext.user.userId && (
+        {authorId.toString() == userContext.user.userId && (
           <DeleteIcon
             sx={{ height: "5rem", width: "5rem", cursor: "pointer" }}
             onClick={deletePost}
