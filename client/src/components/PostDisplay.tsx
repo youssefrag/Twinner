@@ -1,7 +1,9 @@
 import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 
-import { Box, Button, Stack, TextField, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
+
+import CommentSection from "./CommentSection";
 
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
@@ -37,6 +39,7 @@ const DislikeAction = styled(Stack)(({ theme }) => ({
 const CommentAction = styled(Stack)(({ theme }) => ({
   borderRight: "1px solid",
   paddingRight: "4rem",
+  cursor: "pointer",
 }));
 
 const InitialBox = styled(Box)(({ theme }) => ({
@@ -147,6 +150,10 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
     }
   };
 
+  // VIEW COMMENT SECTION
+
+  const [viewComments, setViewComments] = useState<boolean>(false);
+
   // RENDER TAGS
 
   const renderTags = tags.map((tag) => {
@@ -214,13 +221,33 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
             </Typography>
           </LikeAction>
         )}
-        <CommentAction flexDirection="row" alignItems="center" gap={4}>
-          <CommentIcon
-            sx={{ color: "primary.dark", height: "2rem", width: "2rem" }}
-          />
-          <Typography variant="addCommentLike">Comment</Typography>
-        </CommentAction>
+        {viewComments ? (
+          <CommentAction
+            flexDirection="row"
+            alignItems="center"
+            gap={4}
+            onClick={() => setViewComments(false)}
+          >
+            <CommentIcon
+              sx={{ color: "primary.dark", height: "2rem", width: "2rem" }}
+            />
+            <Typography variant="addCommentLike">Comments &#x2191;</Typography>
+          </CommentAction>
+        ) : (
+          <CommentAction
+            flexDirection="row"
+            alignItems="center"
+            gap={4}
+            onClick={() => setViewComments(true)}
+          >
+            <CommentIcon
+              sx={{ color: "primary.dark", height: "2rem", width: "2rem" }}
+            />
+            <Typography variant="addCommentLike">Comments &#x2193;</Typography>
+          </CommentAction>
+        )}
       </Stack>
+      {viewComments && <CommentSection postId={id} />}
     </PostContainer>
   );
 };
