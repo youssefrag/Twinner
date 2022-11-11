@@ -100,7 +100,24 @@ const CommentSection = ({ postId }: Props) => {
     }
   };
 
-  // Handle get
+  // Handle get comments
+
+  let [comments, setComments] = useState<Comment[]>([]);
+
+  const getAllComments = async () => {
+    let response = await fetch(`http://localhost:8080/comments/${postId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    console.log(result.rows);
+  };
+
+  useEffect(() => {
+    getAllComments();
+  }, []);
 
   return (
     <MainContainer>

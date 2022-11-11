@@ -166,9 +166,6 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
     );
   });
 
-  console.log(typeof authorId.toString());
-  console.log(typeof userContext.user.userId);
-  // console.log(authorId.toString() === userContext.user.userId);
   return (
     <PostContainer gap={6}>
       <Stack flexDirection="row" alignItems="center" gap={4}>

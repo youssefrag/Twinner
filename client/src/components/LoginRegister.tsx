@@ -166,7 +166,6 @@ const LoginRegister = () => {
       }
     );
     let result = await response.json();
-    console.log(result.rows[0]);
     const userDataDB = result.rows[0];
     if (!userDataDB) {
       setAlerts({

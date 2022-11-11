@@ -192,6 +192,22 @@ app.post("/add-comment", async (req, res) => {
   }
 });
 
+//Get comment for post
+
+app.get("/comments/:postId", async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const comments = await pool.query(
+      "SELECT comment.id, comment.content as content, comment.profile_id, profile.name FROM comment JOIN profile ON comment.profile_id = profile.id WHERE comment.post_id=$1",
+      [postId]
+    );
+    res.json(comments);
+  } catch (err) {
+    console.log(err.message);
+    res.json(err.message);
+  }
+});
+
 //Delete comment
 
 app.listen(8080, () => {
