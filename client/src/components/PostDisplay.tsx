@@ -20,7 +20,7 @@ import { styled } from "@mui/material/styles";
 const PostContainer = styled(Stack)(({ theme }) => ({
   borderBottom: "1px solid",
   marginTop: "4rem",
-  paddingBottom: "4rem",
+  paddingBottom: "2rem",
 }));
 
 const LikeAction = styled(Stack)(({ theme }) => ({

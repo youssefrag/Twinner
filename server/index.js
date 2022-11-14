@@ -181,11 +181,11 @@ app.delete("/post/:postId", async (req, res) => {
 app.post("/add-comment", async (req, res) => {
   try {
     const { postComment, postId, userId } = req.body;
-    await pool.query(
-      "INSERT INTO comment (profile_id, post_id, content) VALUES ($1, $2, $3)",
+    const comment = await pool.query(
+      "INSERT INTO comment (profile_id, post_id, content) VALUES ($1, $2, $3) RETURNING *",
       [userId, postId, postComment]
     );
-    res.json("Comment added succesfully");
+    res.json(comment);
   } catch (err) {
     console.log(err.message);
     res.json(err.message);

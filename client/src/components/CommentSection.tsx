@@ -77,7 +77,7 @@ const CommentSection = ({ postId }: Props) => {
 
   // Handle post comment
 
-  const [postComment, setPostComment] = useState<string>("{}");
+  const [postComment, setPostComment] = useState<string>("");
 
   const handleChangePostComment = (e: React.FormEvent) => {
     const element = e.currentTarget as HTMLInputElement;
@@ -103,7 +103,18 @@ const CommentSection = ({ postId }: Props) => {
       }),
     });
     const result = await response.json();
-    if (result === "Comment added succesfully") {
+    console.log(result.rows[0]);
+
+    let initials = "";
+
+    if (userContext.user.name) {
+      const nameArray = userContext.user.name.split(" ");
+
+      initials += nameArray[0][0].toUpperCase();
+      initials += nameArray[nameArray.length - 1][0].toUpperCase();
+    }
+
+    if (result.rows[0].id) {
       window.location.reload();
     }
   };
@@ -149,8 +160,6 @@ const CommentSection = ({ postId }: Props) => {
   // Render Comments Component
 
   const renderComments = comments.map((comment) => {
-    console.log(comment);
-
     const { id, postId, authorId, authorName, authorInitials, content } =
       comment;
     return (
