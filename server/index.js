@@ -176,6 +176,18 @@ app.delete("/post/:postId", async (req, res) => {
   }
 });
 
+// Delete comment
+
+app.delete("/comment/:commentId", async (req, res) => {
+  try {
+    const { commentId } = req.params;
+    await pool.query("DELETE FROM comment WHERE id=$1", [commentId]);
+    res.json("Comment was deleted");
+  } catch (err) {
+    res.json(err.message);
+  }
+});
+
 //Comment on post
 
 app.post("/add-comment", async (req, res) => {

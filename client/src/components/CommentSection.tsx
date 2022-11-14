@@ -157,6 +157,19 @@ const CommentSection = ({ postId }: Props) => {
     getAllComments();
   }, []);
 
+  // Handle Delete Comment
+
+  const handleDeleteComment = async (id: string) => {
+    let response = await fetch(`http://localhost:8080/comment/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    console.log(result);
+  };
+
   // Render Comments Component
 
   const renderComments = comments.map((comment) => {
@@ -178,7 +191,9 @@ const CommentSection = ({ postId }: Props) => {
             </Typography>
           </Stack>
         </Stack>
-        {userContext.user.userId == authorId && <DeleteIcon />}
+        {userContext.user.userId == authorId && (
+          <DeleteIcon onClick={() => handleDeleteComment(id)} />
+        )}
       </Stack>
     );
   });
