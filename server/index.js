@@ -229,7 +229,31 @@ app.get("/comments/:postId", async (req, res) => {
   }
 });
 
-//Delete comment
+//Get comments notifications
+
+app.get("/comment_nots/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    let commentNots = await pool.query(
+      "SELECT post.content, comment.profile_id FROM comment_notification INNER JOIN comment ON comment.id = comment_notification.comment_id INNER JOIN post ON post.id = comment.post_id WHERE post.profile_id=$1",
+      [userId]
+    );
+    let commentsArray = [];
+    for (let index = 0; index < commentNots.rows.length; index++) {
+      const element = commentNots.rows[index];
+      const authorName = await pool.query(
+        "Select profile.name FROM profile WHERE profile.id=$1",
+        [element.profile_id]
+      );
+      const commentObj = { ...element, authorName: authorName.rows[0].name };
+      commentsArray.push(commentObj);
+    }
+    res.json(commentsArray);
+  } catch (err) {
+    console.log(err.message);
+    res.json(err.message);
+  }
+});
 
 app.listen(8080, () => {
   console.log(`Server has started on port ${PORT} 👍`);
