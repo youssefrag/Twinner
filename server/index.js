@@ -235,7 +235,7 @@ app.get("/comment_nots/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
     let commentNots = await pool.query(
-      "SELECT comment.id, post.content, comment.profile_id FROM comment_notification INNER JOIN comment ON comment.id = comment_notification.comment_id INNER JOIN post ON post.id = comment.post_id WHERE post.profile_id=$1",
+      "SELECT comment.id, post.content, comment.profile_id FROM comment_notification INNER JOIN comment ON comment.id = comment_notification.comment_id INNER JOIN post ON post.id = comment.post_id WHERE post.profile_id=$1 LIMIT 5",
       [userId]
     );
     let commentsArray = [];
@@ -261,7 +261,7 @@ app.get("/like_nots/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
     let likeNots = await pool.query(
-      "SELECT likes.id, post.content, likes.profile_id FROM like_notification INNER JOIN likes ON likes.id = like_notification.like_id INNER JOIN post ON post.id = likes.post_id WHERE post.profile_id=$1",
+      "SELECT likes.id, post.content, likes.profile_id FROM like_notification INNER JOIN likes ON likes.id = like_notification.like_id INNER JOIN post ON post.id = likes.post_id WHERE post.profile_id=$1 LIMIT 5",
       [userId]
     );
     let likesArray = [];

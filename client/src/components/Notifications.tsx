@@ -123,13 +123,39 @@ const Notifications = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle}>
-          <Typography variant="mainSecondary">Comments</Typography>
-          <Stack marginTop={6} marginBottom={6} gap={4}>
-            {renderCommentNots}
-          </Stack>
-          <Typography variant="mainSecondary">Likes</Typography>
+          {renderCommentNots.length > 0 ? (
+            <Box>
+              <Typography variant="mainSecondary">Comments</Typography>
+
+              <Stack marginTop={6} marginBottom={6} gap={4}>
+                {renderCommentNots}
+              </Stack>
+            </Box>
+          ) : (
+            <Box marginBottom={6}>
+              <Typography variant="mainSecondary">
+                No comment notifications
+              </Typography>
+            </Box>
+          )}
+
           <Stack marginTop={6} gap={4}>
-            {renderLikeNots}
+            {renderLikeNots.length > 0 ? (
+              <Box>
+                <Typography variant="mainSecondary">Likes</Typography>
+
+                <Stack marginTop={6} marginBottom={6} gap={4}>
+                  {renderLikeNots}
+                </Stack>
+              </Box>
+            ) : (
+              <Box marginBottom={6}>
+                <Typography variant="mainSecondary">
+                  No like notifications
+                </Typography>
+              </Box>
+            )}
+            {/* {renderLikeNots} */}
           </Stack>
         </Box>
       </Modal>
