@@ -113,7 +113,15 @@ const Notifications = () => {
         onClick={handleOpenMOdal}
         sx={{ cursor: "pointer" }}
       >
-        <Typography sx={{ color: "#fff" }}>Notifications</Typography>;
+        <Typography
+          sx={{
+            color: "#fff",
+            fontSize: { xl: "1.8rem", lg: "1.6rem", md: "1.4" },
+          }}
+        >
+          Notifications
+        </Typography>
+        ;
         <NotificationsIcon sx={{ color: "#fff" }} />
       </Stack>
       <Modal

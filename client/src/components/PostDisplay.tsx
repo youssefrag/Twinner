@@ -52,6 +52,11 @@ const InitialBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   fontSize: "1.4rem",
   borderRadius: "50%",
+  [theme.breakpoints.down("lg")]: {
+    fontSize: "1.2rem",
+    height: "3rem",
+    width: "3rem",
+  },
 }));
 
 const TagBox = styled(Box)(({ theme }) => ({
@@ -183,7 +188,11 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
         <Typography variant="postContent">{content}</Typography>
         {authorId.toString() == userContext.user.userId && (
           <DeleteIcon
-            sx={{ height: "5rem", width: "5rem", cursor: "pointer" }}
+            sx={{
+              height: { xl: "5rem", lg: "4rem", md: "3rem" },
+              width: { xl: "5rem", lg: "4rem", md: "3rem" },
+              cursor: "pointer",
+            }}
             onClick={deletePost}
           />
         )}
@@ -200,9 +209,16 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
             onClick={handleRemoveLike}
           >
             <FavoriteIcon
-              sx={{ color: "primary.dark", height: "2rem", width: "2rem" }}
+              sx={{
+                color: "primary.dark",
+                height: { lg: "2rem", md: "1.6rem" },
+                width: { lg: "2rem", md: "1.6rem" },
+              }}
             />
-            <Typography variant="addCommentLike">
+            <Typography
+              variant="addCommentLike"
+              sx={{ fontSize: { xl: "1.6rem", lg: "1.4rem", md: "1.2rem" } }}
+            >
               Likes ({likes.length})
             </Typography>
           </DislikeAction>
@@ -214,9 +230,16 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
             onClick={handleLike}
           >
             <FavoriteBorderIcon
-              sx={{ color: "primary.dark", height: "2rem", width: "2rem" }}
+              sx={{
+                color: "primary.dark",
+                height: { lg: "2rem", md: "1.6rem" },
+                width: { lg: "2rem", md: "1.6rem" },
+              }}
             />
-            <Typography variant="addCommentLike">
+            <Typography
+              variant="addCommentLike"
+              sx={{ fontSize: { xl: "1.6rem", lg: "1.4rem", md: "1.2rem" } }}
+            >
               Likes ({likes.length})
             </Typography>
           </LikeAction>
@@ -229,9 +252,18 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
             onClick={() => setViewComments(false)}
           >
             <CommentIcon
-              sx={{ color: "primary.dark", height: "2rem", width: "2rem" }}
+              sx={{
+                color: "primary.dark",
+                height: { lg: "2rem", md: "1.6rem" },
+                width: { lg: "2rem", md: "1.6rem" },
+              }}
             />
-            <Typography variant="addCommentLike">Comments &#x2191;</Typography>
+            <Typography
+              variant="addCommentLike"
+              sx={{ fontSize: { xl: "1.6rem", lg: "1.4rem", md: "1.2rem" } }}
+            >
+              Comments &#x2191;
+            </Typography>
           </CommentAction>
         ) : (
           <CommentAction
@@ -241,9 +273,18 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
             onClick={() => setViewComments(true)}
           >
             <CommentIcon
-              sx={{ color: "primary.dark", height: "2rem", width: "2rem" }}
+              sx={{
+                color: "primary.dark",
+                height: { lg: "2rem", md: "1.6rem" },
+                width: { lg: "2rem", md: "1.6rem" },
+              }}
             />
-            <Typography variant="addCommentLike">Comments &#x2193;</Typography>
+            <Typography
+              variant="addCommentLike"
+              sx={{ fontSize: { xl: "1.6rem", lg: "1.4rem", md: "1.2rem" } }}
+            >
+              Comments &#x2193;
+            </Typography>
           </CommentAction>
         )}
       </Stack>

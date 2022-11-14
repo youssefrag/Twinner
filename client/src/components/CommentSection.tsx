@@ -12,6 +12,9 @@ import { styled } from "@mui/material/styles";
 const MainContainer = styled(Stack)(({ theme }) => ({
   marginTop: "4rem",
   paddingLeft: "3rem",
+  [theme.breakpoints.down("lg")]: {
+    paddingLeft: "1rem",
+  },
 }));
 
 const InitialBox = styled(Box)(({ theme }) => ({
@@ -24,12 +27,18 @@ const InitialBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   fontSize: "1.2rem",
   borderRadius: "50%",
+  flexShrink: 0,
+  [theme.breakpoints.down("lg")]: {
+    fontSize: "1rem",
+  },
 }));
 
 const CommentBox = styled(Stack)(({ theme }) => ({
   paddingLeft: "3rem",
   marginTop: "4rem",
-  //   borderBottom: "1px solid",
+  [theme.breakpoints.down("lg")]: {
+    paddingLeft: "1rem",
+  },
 }));
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
@@ -54,6 +63,10 @@ const StyledButton = styled(Button)(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.primary.dark,
     color: theme.palette.primary.light,
+  },
+  [theme.breakpoints.down("lg")]: {
+    fontSize: "0.8rem",
+    padding: "0.4rem 1rem",
   },
 }));
 
@@ -187,6 +200,7 @@ const CommentSection = ({ postId }: Props) => {
         key={id}
         flexDirection="row"
         justifyContent="space-between"
+        alignItems="center"
         sx={{ borderBottom: "1px solid", paddingBottom: 7 }}
       >
         <Stack flexDirection="row" gap={6} alignItems="center" key={comment.id}>

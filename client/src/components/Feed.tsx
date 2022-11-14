@@ -20,6 +20,12 @@ const StyledContainerBox = styled(Box)(({ theme }) => ({
   padding: "3rem",
   borderRadius: "30px",
   boxShadow: "3px 2px 16px 3px rgba(0,0,0,0.34)",
+  [theme.breakpoints.down("xl")]: {
+    marginRight: "100px",
+  },
+  [theme.breakpoints.down("lg")]: {
+    marginRight: "50px",
+  },
 }));
 
 const Feed = () => {
@@ -129,7 +135,7 @@ const Feed = () => {
   return (
     <StyledContainerBox>
       <Typography variant="mainSubHeading">Feed</Typography>
-      <Box sx={{ marginTop: "3rem" }}>
+      <Box sx={{ marginTop: { xl: "3rem", lg: "2rem" } }}>
         <FeedFilter
           tags={tags}
           selectedTags={filterTags}

@@ -17,6 +17,9 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
     backgroundColor: theme.palette.primary.dark,
     width: 240,
     boxSizing: "border-box",
+    [theme.breakpoints.down("lg")]: {
+      width: 220,
+    },
   },
 }));
 
@@ -35,6 +38,11 @@ const InitialBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   fontSize: "1.4rem",
   borderRadius: "50%",
+  [theme.breakpoints.down("lg")]: {
+    fontSize: "1.2rem",
+    height: "2.4rem",
+    width: "2.4rem",
+  },
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -45,6 +53,10 @@ const StyledButton = styled(Button)(({ theme }) => ({
   "&:hover": {
     backgroundColor: "#fff",
     color: theme.palette.primary.dark,
+  },
+  [theme.breakpoints.down("lg")]: {
+    fontSize: "0.8rem",
+    padding: "0.4rem 0.1rem",
   },
 }));
 
@@ -76,7 +88,12 @@ const Navbar: React.FC = () => {
     <StyledDrawer variant="permanent" anchor="left">
       <Stack alignItems="center" marginTop={5} gap={7}>
         <Stack flexDirection="row" alignItems="center">
-          <Typography variant="logo">Twinner</Typography>
+          <Typography
+            variant="logo"
+            sx={{ fontSize: { xl: "2.4rem", lg: "2rem", md: "1.8rem" } }}
+          >
+            Twinner
+          </Typography>
           <StyledLogoIcon />
         </Stack>
         <Stack alignItems="center" gap={4}>

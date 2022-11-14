@@ -17,6 +17,12 @@ const StyledContainerBox = styled(Box)(({ theme }) => ({
   padding: "3rem",
   borderRadius: "30px",
   boxShadow: "3px 2px 16px 3px rgba(0,0,0,0.34)",
+  [theme.breakpoints.down("xl")]: {
+    marginRight: "100px",
+  },
+  [theme.breakpoints.down("lg")]: {
+    marginRight: "50px",
+  },
 }));
 
 const InitialBox = styled(Box)(({ theme }) => ({
@@ -31,6 +37,11 @@ const InitialBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   fontSize: "1.4rem",
   borderRadius: "50%",
+  [theme.breakpoints.down("lg")]: {
+    fontSize: "1.2rem",
+    height: "3rem",
+    width: "3rem",
+  },
 }));
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
@@ -53,6 +64,9 @@ const StyledButton = styled(Button)(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.primary.light,
     color: theme.palette.primary.dark,
+  },
+  [theme.breakpoints.down("lg")]: {
+    fontSize: "1.2rem",
   },
 }));
 
