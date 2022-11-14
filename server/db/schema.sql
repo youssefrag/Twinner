@@ -37,3 +37,15 @@ CREATE TABLE tag_post (
     post_id INT REFERENCES post(id) ON DELETE CASCADE,
     tag_id INT REFERENCES tag(id) ON DELETE CASCADE
 );
+
+CREATE TABLE comment_notification (
+    id SERIAL PRIMARY KEY NOT NULL,
+    comment_id INT REFERENCES comment(id) ON DELETE CASCADE,
+    date DATE DEFAULT CURRENT_DATE
+);
+
+CREATE TABLE like_notification (
+    id SERIAL PRIMARY KEY NOT NULL,
+    like_id INT REFERENCES likes(id) ON DELETE CASCADE,
+    date DATE DEFAULT CURRENT_DATE
+);

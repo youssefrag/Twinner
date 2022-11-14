@@ -113,11 +113,15 @@ app.get("/allTags", async (req, res) => {
 app.post("/like-post", async (req, res) => {
   try {
     const { postId, userId } = req.body;
-    await pool.query(
-      "INSERT INTO likes (post_id, profile_id) VALUES ($1, $2)",
+    const like = await pool.query(
+      "INSERT INTO likes (post_id, profile_id) VALUES ($1, $2) RETURNING *",
 
       [postId, userId]
     );
+    const likeId = like.rows[0].id;
+    await pool.query("INSERT INTO like_notification (like_id) VALUES ($1)", [
+      likeId,
+    ]);
     res.json("like added succesfully");
   } catch (errs) {
     res.json(err.message);
@@ -196,6 +200,11 @@ app.post("/add-comment", async (req, res) => {
     const comment = await pool.query(
       "INSERT INTO comment (profile_id, post_id, content) VALUES ($1, $2, $3) RETURNING *",
       [userId, postId, postComment]
+    );
+    const commentId = comment.rows[0].id;
+    await pool.query(
+      "INSERT INTO comment_notification (comment_id) VALUES ($1)",
+      [commentId]
     );
     res.json(comment);
   } catch (err) {

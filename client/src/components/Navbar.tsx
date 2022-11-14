@@ -8,6 +8,8 @@ import { styled } from "@mui/material/styles";
 import CampaignIcon from "@mui/icons-material/Campaign";
 
 import LoginRegister from "./LoginRegister";
+import Notifications from "./Notifications";
+
 import Cookies from "js-cookie";
 
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
@@ -92,6 +94,8 @@ const Navbar: React.FC = () => {
             </Stack>
           )}
         </Stack>
+
+        {userContext.isUserLoggedIn && <Notifications />}
       </Stack>
     </StyledDrawer>
   );
