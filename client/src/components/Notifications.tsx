@@ -53,7 +53,14 @@ const Notifications = () => {
 
   const renderCommentNots = commentNots.map((not) => {
     return (
-      <Typography key={not.id}>
+      <Typography
+        key={not.id}
+        sx={{
+          fontFamily: "Lato, sans-serif",
+          fontSize: "1rem",
+          color: "#302061",
+        }}
+      >
         {not.authorName} commented on your post "{not.content.slice(0, 7)}
         ..."
       </Typography>
@@ -80,7 +87,14 @@ const Notifications = () => {
   };
   const renderLikeNots = likeNots.map((not) => {
     return (
-      <Typography key={not.id}>
+      <Typography
+        sx={{
+          fontFamily: "Lato, sans-serif",
+          fontSize: "1rem",
+          color: "#302061",
+        }}
+        key={not.id}
+      >
         {not.authorName} liked your post "{not.content.slice(0, 7)}
         ..."
       </Typography>
@@ -109,10 +123,14 @@ const Notifications = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle}>
-          <Typography>Comments</Typography>
-          <Stack gap={4}>{renderCommentNots}</Stack>
-          <Typography>Likes</Typography>
-          <Stack gap={4}>{renderLikeNots}</Stack>
+          <Typography variant="mainSecondary">Comments</Typography>
+          <Stack marginTop={6} marginBottom={6} gap={4}>
+            {renderCommentNots}
+          </Stack>
+          <Typography variant="mainSecondary">Likes</Typography>
+          <Stack marginTop={6} gap={4}>
+            {renderLikeNots}
+          </Stack>
         </Box>
       </Modal>
     </>
