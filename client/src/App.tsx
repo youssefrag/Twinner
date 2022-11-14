@@ -11,6 +11,7 @@ import MainTheme from "./theme";
 import Navbar from "./components/Navbar";
 import CreatePost from "./components/CreatePost";
 import Feed from "./components/Feed";
+import MobileNavbar from "./components/MobileNavbar";
 
 function App() {
   const [isUserLoggedIn, setUserLoggedIn] = useState<boolean>(false);
@@ -35,6 +36,7 @@ function App() {
           isUserLoggedIn={isUserLoggedIn}
           setUserLoggedIn={setUserLoggedIn}
         >
+          <MobileNavbar />
           <Navbar />
           <CreatePost />
           <Feed />

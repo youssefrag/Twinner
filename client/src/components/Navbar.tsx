@@ -20,6 +20,9 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
     [theme.breakpoints.down("lg")]: {
       width: 220,
     },
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
   },
 }));
 

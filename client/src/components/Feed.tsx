@@ -26,6 +26,9 @@ const StyledContainerBox = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("lg")]: {
     marginRight: "50px",
   },
+  [theme.breakpoints.down("md")]: {
+    marginLeft: "50px",
+  },
 }));
 
 const Feed = () => {
