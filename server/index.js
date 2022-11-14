@@ -235,7 +235,7 @@ app.get("/comment_nots/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
     let commentNots = await pool.query(
-      "SELECT post.content, comment.profile_id FROM comment_notification INNER JOIN comment ON comment.id = comment_notification.comment_id INNER JOIN post ON post.id = comment.post_id WHERE post.profile_id=$1",
+      "SELECT comment.id, post.content, comment.profile_id FROM comment_notification INNER JOIN comment ON comment.id = comment_notification.comment_id INNER JOIN post ON post.id = comment.post_id WHERE post.profile_id=$1",
       [userId]
     );
     let commentsArray = [];
@@ -249,6 +249,32 @@ app.get("/comment_nots/:userId", async (req, res) => {
       commentsArray.push(commentObj);
     }
     res.json(commentsArray);
+  } catch (err) {
+    console.log(err.message);
+    res.json(err.message);
+  }
+});
+
+// Get Like notifications
+
+app.get("/like_nots/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    let likeNots = await pool.query(
+      "SELECT likes.id, post.content, likes.profile_id FROM like_notification INNER JOIN likes ON likes.id = like_notification.like_id INNER JOIN post ON post.id = likes.post_id WHERE post.profile_id=$1",
+      [userId]
+    );
+    let likesArray = [];
+    for (let index = 0; index < likeNots.rows.length; index++) {
+      const element = likeNots.rows[index];
+      const authorName = await pool.query(
+        "Select profile.name FROM profile WHERE profile.id=$1",
+        [element.profile_id]
+      );
+      const likeObj = { ...element, authorName: authorName.rows[0].name };
+      likesArray.push(likeObj);
+    }
+    res.json(likesArray);
   } catch (err) {
     console.log(err.message);
     res.json(err.message);

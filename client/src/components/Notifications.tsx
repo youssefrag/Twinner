@@ -11,7 +11,7 @@ const modalStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "30rem",
-  bgcolor: "#f2eefe",
+  bgcolor: "#fff",
   boxShadow: 24,
   p: 4,
   borderRadius: "30px",
@@ -21,7 +21,7 @@ const modalStyle = {
 interface Notification {
   id: string;
   authorName: string;
-  postContent: string;
+  content: string;
   date: Date;
 }
 
@@ -51,12 +51,45 @@ const Notifications = () => {
     setCommentNots(result);
   };
 
+  const renderCommentNots = commentNots.map((not) => {
+    return (
+      <Typography key={not.id}>
+        {not.authorName} commented on your post "{not.content.slice(0, 7)}
+        ..."
+      </Typography>
+    );
+  });
+
   // Handle Like Notifications
 
-  const [likeNots, setLikeNot] = useState<Notification[]>([]);
+  const [likeNots, setLikeNots] = useState<Notification[]>([]);
+
+  const getLikeNots = async () => {
+    let response = await fetch(
+      `http://localhost:8080/like_nots/${userContext.user.userId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    let result = await response.json();
+    setLikeNots(result);
+    // console.log(result);
+  };
+  const renderLikeNots = likeNots.map((not) => {
+    return (
+      <Typography key={not.id}>
+        {not.authorName} liked your post "{not.content.slice(0, 7)}
+        ..."
+      </Typography>
+    );
+  });
 
   useEffect(() => {
     getCommentNots();
+    getLikeNots();
   }, []);
 
   return (
@@ -76,7 +109,10 @@ const Notifications = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle}>
+          <Typography>Comments</Typography>
+          <Stack gap={4}>{renderCommentNots}</Stack>
           <Typography>Likes</Typography>
+          <Stack gap={4}>{renderLikeNots}</Stack>
         </Box>
       </Modal>
     </>
