@@ -147,7 +147,6 @@ const CreatePost = () => {
               <Box>
                 <TagPosts
                   tags={tags}
-                  setTags={setTags}
                   selectedTags={selectedTags}
                   setSelectedTags={setSelectedTags}
                 />

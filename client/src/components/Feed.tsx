@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 
+import FeedFilter from "./FeedFilter";
+
 import { Box, Typography } from "@mui/material";
 
 import { styled } from "@mui/material/styles";
@@ -75,17 +77,76 @@ const Feed = () => {
     setPosts(postsArray);
   };
 
+  // Tags filter functionality
+
+  let [tags, setTags] = useState<Tag[]>([]);
+  let [filterTags, setFilterTags] = useState<Tag[]>([]);
+
+  const getTags = async () => {
+    let response = await fetch("http://localhost:8080/allTags", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    let result = await response.json();
+    setTags(result.rows);
+  };
+
   useEffect(() => {
     getAllPostsAndProfiles();
+    getTags();
   }, []);
 
-  const renderPosts = posts.map((post) => {
-    return <PostDisplay key={post.id} post={post} />;
+  let renderPosts = [];
+
+  renderPosts = posts.map((post) => {
+    if (filterTags.length === 0) {
+      return <PostDisplay key={post.id} post={post} />;
+    } else {
+      let filterTagIdArray: number[] = [];
+      filterTags.forEach((tag) => {
+        filterTagIdArray.push(Number(tag.id));
+      });
+      // console.log(filterTagIdArray);
+
+      // let postTagIdArray: number[] = [];
+      // posts[0].tags.forEach((tag) => {
+      //   postTagIdArray.push(Number(tag.id));
+      // });
+      // console.log(postTagIdArray);
+
+      // console.log(
+      //   filterTagIdArray.every((tag) => {
+      //     return postTagIdArray.includes(tag);
+      //   })
+      // );
+
+      const filteredPosts = posts.filter((post) => {
+        let postTagIdArray: number[] = [];
+        post.tags.forEach((tag) => {
+          postTagIdArray.push(Number(tag.id));
+        });
+        const filteredPostsArray = posts.filter((post) =>
+          filterTagIdArray.every((tag) => {
+            return postTagIdArray.includes(tag);
+          })
+        );
+        console.log(filteredPostsArray);
+      });
+    }
   });
 
   return (
     <StyledContainerBox>
       <Typography variant="mainSubHeading">Feed</Typography>
+      <Box sx={{ marginTop: "3rem" }}>
+        <FeedFilter
+          tags={tags}
+          selectedTags={filterTags}
+          setSelectedTags={setFilterTags}
+        />
+      </Box>
       {renderPosts}
     </StyledContainerBox>
   );

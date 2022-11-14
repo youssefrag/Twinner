@@ -36,7 +36,7 @@ const SelectedTagBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.primary.dark,
 }));
 
-const TagPosts: React.FC<Props> = ({
+const FeedFilter: React.FC<Props> = ({
   tags,
   selectedTags,
   setSelectedTags,
@@ -74,7 +74,7 @@ const TagPosts: React.FC<Props> = ({
 
   return (
     <>
-      <Typography variant="addTags">Add tags to your post</Typography>
+      <Typography variant="addTags">Filter feed by selecting tags!</Typography>
       <Stack
         flexDirection="row"
         alignItems="center"
@@ -83,10 +83,9 @@ const TagPosts: React.FC<Props> = ({
         flexWrap="wrap"
       >
         {renderTags}
-        <CreateTag />
       </Stack>
     </>
   );
 };
 
-export default TagPosts;
+export default FeedFilter;
