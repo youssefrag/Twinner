@@ -98,44 +98,33 @@ const Feed = () => {
     getTags();
   }, []);
 
-  let renderPosts = [];
+  let renderPosts: any[] = [];
 
-  renderPosts = posts.map((post) => {
-    if (filterTags.length === 0) {
+  if (filterTags.length === 0) {
+    renderPosts = posts.map((post) => {
       return <PostDisplay key={post.id} post={post} />;
-    } else {
-      let filterTagIdArray: number[] = [];
-      filterTags.forEach((tag) => {
-        filterTagIdArray.push(Number(tag.id));
+    });
+  } else {
+    let filterTagIdArray: number[] = [];
+    filterTags.forEach((tag) => {
+      filterTagIdArray.push(Number(tag.id));
+    });
+
+    const filteredPosts = posts.filter((post) => {
+      let postTagIdArray: number[] = [];
+      post.tags.forEach((tag) => {
+        postTagIdArray.push(Number(tag.id));
       });
-      // console.log(filterTagIdArray);
-
-      // let postTagIdArray: number[] = [];
-      // posts[0].tags.forEach((tag) => {
-      //   postTagIdArray.push(Number(tag.id));
-      // });
-      // console.log(postTagIdArray);
-
-      // console.log(
-      //   filterTagIdArray.every((tag) => {
-      //     return postTagIdArray.includes(tag);
-      //   })
-      // );
-
-      const filteredPosts = posts.filter((post) => {
-        let postTagIdArray: number[] = [];
-        post.tags.forEach((tag) => {
-          postTagIdArray.push(Number(tag.id));
-        });
-        const filteredPostsArray = posts.filter((post) =>
-          filterTagIdArray.every((tag) => {
-            return postTagIdArray.includes(tag);
-          })
-        );
-        console.log(filteredPostsArray);
+      const filteredPostsArray = posts.filter((post) =>
+        filterTagIdArray.every((tag) => {
+          return postTagIdArray.includes(tag);
+        })
+      );
+      renderPosts = filteredPostsArray.map((post) => {
+        return <PostDisplay key={post.id} post={post} />;
       });
-    }
-  });
+    });
+  }
 
   return (
     <StyledContainerBox>
