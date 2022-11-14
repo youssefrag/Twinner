@@ -168,6 +168,13 @@ const CommentSection = ({ postId }: Props) => {
     });
     const result = await response.json();
     console.log(result);
+    if (result === "Comment was deleted") {
+      const newComments = comments.filter(
+        (deletedComment) => deletedComment.id !== id
+      );
+      // console.log(newComments);
+      setComments(newComments);
+    }
   };
 
   // Render Comments Component
@@ -192,7 +199,10 @@ const CommentSection = ({ postId }: Props) => {
           </Stack>
         </Stack>
         {userContext.user.userId == authorId && (
-          <DeleteIcon onClick={() => handleDeleteComment(id)} />
+          <DeleteIcon
+            sx={{ cursor: "pointer" }}
+            onClick={() => handleDeleteComment(id)}
+          />
         )}
       </Stack>
     );
