@@ -17,6 +17,8 @@ import { Post } from "../models";
 
 import { styled } from "@mui/material/styles";
 
+import useWindowDimensions from "./useWindowDimensions";
+
 const PostContainer = styled(Stack)(({ theme }) => ({
   borderBottom: "1px solid",
   marginTop: "4rem",
@@ -65,6 +67,19 @@ const TagBox = styled(Box)(({ theme }) => ({
   borderRadius: "50px",
   cursor: "pointer",
   backgroundColor: theme.palette.primary.dark,
+}));
+
+const PostText = styled(Typography)(({ theme }) => ({
+  fontFamily: "Lato, sans-serif",
+  fontSize: "2rem",
+  color: "#302061",
+  fontWeight: 500,
+  [theme.breakpoints.down("md")]: {
+    fontSize: "1.6rem",
+  },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.2rem",
+  },
 }));
 
 interface Props {
@@ -185,7 +200,7 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Typography variant="postContent">{content}</Typography>
+        <PostText>{content}</PostText>
         {authorId.toString() == userContext.user.userId && (
           <DeleteIcon
             sx={{
@@ -200,7 +215,7 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
       <Stack flexDirection="row" gap={3}>
         {renderTags}
       </Stack>
-      <Stack flexDirection="row" gap={8} marginTop={5}>
+      <Stack flexDirection={0 !== 0 ? "row" : "column"} gap={8} marginTop={5}>
         {likes.includes(userContext.user.userId) ? (
           <DislikeAction
             flexDirection="row"
@@ -211,13 +226,20 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
             <FavoriteIcon
               sx={{
                 color: "primary.dark",
-                height: { lg: "2rem", md: "1.6rem" },
-                width: { lg: "2rem", md: "1.6rem" },
+                height: { lg: "2rem", md: "1.6rem", sm: "1rem" },
+                width: { lg: "2rem", md: "1.6rem", sm: "1rem" },
               }}
             />
             <Typography
               variant="addCommentLike"
-              sx={{ fontSize: { xl: "1.6rem", lg: "1.4rem", md: "1.2rem" } }}
+              sx={{
+                fontSize: {
+                  xl: "1.6rem",
+                  lg: "1.4rem",
+                  md: "1.2rem",
+                  sm: "1rem",
+                },
+              }}
             >
               Likes ({likes.length})
             </Typography>

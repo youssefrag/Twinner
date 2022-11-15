@@ -45,6 +45,9 @@ const InitialBox = styled(Box)(({ theme }) => ({
     height: "3rem",
     width: "3rem",
   },
+  [theme.breakpoints.down("sm")]: {
+    display: "none",
+  },
 }));
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
