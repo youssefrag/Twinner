@@ -126,16 +126,6 @@ const CommentSection = ({ postId }: Props) => {
       }),
     });
     const result = await response.json();
-    console.log(result.rows[0]);
-
-    let initials = "";
-
-    if (userContext.user.name) {
-      const nameArray = userContext.user.name.split(" ");
-
-      initials += nameArray[0][0].toUpperCase();
-      initials += nameArray[nameArray.length - 1][0].toUpperCase();
-    }
 
     if (result.rows[0].id) {
       window.location.reload();
@@ -203,8 +193,7 @@ const CommentSection = ({ postId }: Props) => {
   // Render Comments Component
 
   const renderComments = comments.map((comment) => {
-    const { id, postId, authorId, authorName, authorInitials, content } =
-      comment;
+    const { id, authorId, authorName, authorInitials, content } = comment;
     return (
       <Stack
         key={id}

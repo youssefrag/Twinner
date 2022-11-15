@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 
-import { Box, Button, Drawer, Modal, Stack, Typography } from "@mui/material";
+import { Box, Modal, Stack, Typography } from "@mui/material";
 
 import NotificationsIcon from "@mui/icons-material/Notifications";
 

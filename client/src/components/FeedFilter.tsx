@@ -11,8 +11,6 @@ import {
 
 import { Tag } from "../models";
 
-import CreateTag from "./CreateTag";
-
 import { styled } from "@mui/material/styles";
 
 interface Props {

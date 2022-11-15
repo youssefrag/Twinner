@@ -99,8 +99,6 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
 
   const { height, width } = useWindowDimensions();
 
-  console.log(width);
-
   // HANDLE LIKES
 
   const [likes, setLikes] = useState<string[]>([]);

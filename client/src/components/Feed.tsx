@@ -10,7 +10,6 @@ import PostDisplay from "./PostDisplay";
 
 import { Tag } from "./../models";
 import { Post } from "./../models";
-import { Profile } from "./../models";
 
 const StyledContainerBox = styled(Box)(({ theme }) => ({
   marginLeft: "300px",
@@ -122,20 +121,26 @@ const Feed = () => {
     filterTags.forEach((tag) => {
       filterTagIdArray.push(Number(tag.id));
     });
+    let filterPostsArray: any[] = [];
 
-    const filteredPosts = posts.filter((post) => {
-      let postTagIdArray: number[] = [];
+    posts.forEach((post) => {
+      const postTagIdArray: number[] = [];
+
       post.tags.forEach((tag) => {
         postTagIdArray.push(Number(tag.id));
       });
-      const filteredPostsArray = posts.filter((post) =>
-        filterTagIdArray.every((tag) => {
-          return postTagIdArray.includes(tag);
+
+      if (
+        filterTagIdArray.every((value) => {
+          return postTagIdArray.includes(value);
         })
-      );
-      renderPosts = filteredPostsArray.map((post) => {
-        return <PostDisplay key={post.id} post={post} />;
-      });
+      ) {
+        filterPostsArray.push(post);
+      }
+    });
+
+    renderPosts = filterPostsArray.map((post) => {
+      return <PostDisplay key={post.id} post={post} />;
     });
   }
 
