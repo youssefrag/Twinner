@@ -59,6 +59,9 @@ const InitialBox = styled(Box)(({ theme }) => ({
     height: "3rem",
     width: "3rem",
   },
+  [theme.breakpoints.down("lg")]: {
+    display: "none",
+  },
 }));
 
 const TagBox = styled(Box)(({ theme }) => ({
@@ -93,6 +96,10 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
   const dateString = date.toString().slice(0, 15);
 
   const userContext = useContext(UserContext);
+
+  const { height, width } = useWindowDimensions();
+
+  console.log(width);
 
   // HANDLE LIKES
 
@@ -215,7 +222,11 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
       <Stack flexDirection="row" gap={3}>
         {renderTags}
       </Stack>
-      <Stack flexDirection={0 !== 0 ? "row" : "column"} gap={8} marginTop={5}>
+      <Stack
+        flexDirection={width > 600 ? "row" : "column"}
+        gap={8}
+        marginTop={5}
+      >
         {likes.includes(userContext.user.userId) ? (
           <DislikeAction
             flexDirection="row"
@@ -226,8 +237,8 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
             <FavoriteIcon
               sx={{
                 color: "primary.dark",
-                height: { lg: "2rem", md: "1.6rem", sm: "1rem" },
-                width: { lg: "2rem", md: "1.6rem", sm: "1rem" },
+                height: { lg: "2rem", md: "1.6rem" },
+                width: { lg: "2rem", md: "1.6rem" },
               }}
             />
             <Typography
@@ -237,7 +248,6 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
                   xl: "1.6rem",
                   lg: "1.4rem",
                   md: "1.2rem",
-                  sm: "1rem",
                 },
               }}
             >
@@ -282,7 +292,13 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
             />
             <Typography
               variant="addCommentLike"
-              sx={{ fontSize: { xl: "1.6rem", lg: "1.4rem", md: "1.2rem" } }}
+              sx={{
+                fontSize: {
+                  xl: "1.6rem",
+                  lg: "1.4rem",
+                  md: "1.2rem",
+                },
+              }}
             >
               Comments &#x2191;
             </Typography>

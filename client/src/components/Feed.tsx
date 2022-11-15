@@ -27,7 +27,11 @@ const StyledContainerBox = styled(Box)(({ theme }) => ({
     marginRight: "50px",
   },
   [theme.breakpoints.down("md")]: {
-    marginLeft: "50px",
+    marginLeft: "30px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    marginLeft: "10px",
+    marginRight: "10px",
   },
 }));
 

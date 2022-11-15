@@ -31,6 +31,9 @@ const InitialBox = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("lg")]: {
     fontSize: "1rem",
   },
+  [theme.breakpoints.down("sm")]: {
+    display: "none",
+  },
 }));
 
 const CommentBox = styled(Stack)(({ theme }) => ({
@@ -52,6 +55,9 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
     fontWeight: 600,
     color: theme.palette.primary.dark,
   },
+  [theme.breakpoints.down("sm")]: {
+    width: "70%",
+  },
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -67,6 +73,10 @@ const StyledButton = styled(Button)(({ theme }) => ({
   [theme.breakpoints.down("lg")]: {
     fontSize: "0.8rem",
     padding: "0.4rem 1rem",
+  },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "0.6rem",
+    padding: "0.3rem 0.8rem",
   },
 }));
 

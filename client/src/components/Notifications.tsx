@@ -5,12 +5,27 @@ import { Box, Button, Drawer, Modal, Stack, Typography } from "@mui/material";
 
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
+import useWindowDimensions from "./useWindowDimensions";
+
 const modalStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "30rem",
+  bgcolor: "#fff",
+  boxShadow: 24,
+  p: 4,
+  borderRadius: "30px",
+  padding: "4rem",
+};
+
+const mediumModalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "12rem",
   bgcolor: "#fff",
   boxShadow: 24,
   p: 4,
@@ -26,6 +41,8 @@ interface Notification {
 }
 
 const Notifications = () => {
+  const { height, width } = useWindowDimensions();
+
   const userContext = useContext(UserContext);
 
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -90,7 +107,7 @@ const Notifications = () => {
       <Typography
         sx={{
           fontFamily: "Lato, sans-serif",
-          fontSize: "1rem",
+          fontSize: "0.8rem",
           color: "#302061",
         }}
         key={not.id}
@@ -130,7 +147,7 @@ const Notifications = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={modalStyle}>
+        <Box sx={width > 900 ? modalStyle : mediumModalStyle}>
           {renderCommentNots.length > 0 ? (
             <Box>
               <Typography variant="mainSecondary">Comments</Typography>

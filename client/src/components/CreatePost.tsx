@@ -9,6 +9,8 @@ import { styled } from "@mui/material/styles";
 
 import { Tag } from "./../models";
 
+import useWindowDimensions from "./useWindowDimensions";
+
 const StyledContainerBox = styled(Box)(({ theme }) => ({
   marginLeft: "300px",
   marginRight: "200px",
@@ -24,7 +26,11 @@ const StyledContainerBox = styled(Box)(({ theme }) => ({
     marginRight: "50px",
   },
   [theme.breakpoints.down("md")]: {
-    marginLeft: "50px",
+    marginLeft: "30px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    marginLeft: "10px",
+    marginRight: "10px",
   },
 }));
 
@@ -77,6 +83,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const CreatePost = () => {
+  const { height, width } = useWindowDimensions();
   const userContext = useContext(UserContext);
 
   let [tags, setTags] = useState<Tag[]>([]);
@@ -160,7 +167,7 @@ const CreatePost = () => {
               {content.length}/300 characters
             </Typography>
             <Stack
-              flexDirection="row"
+              flexDirection={width > 600 ? "row" : "column"}
               justifyContent="space-between"
               marginTop={6}
             >

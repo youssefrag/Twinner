@@ -20,6 +20,8 @@ import {
 import { styled } from "@mui/material/styles";
 import PasswordIncorrect from "../messages/PasswordIncorrect";
 
+import useWindowDimensions from "./useWindowDimensions";
+
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.primary.light,
   fontSize: "1rem",
@@ -68,6 +70,19 @@ const modalStyle = {
   padding: "4rem",
 };
 
+const mediumModalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "12rem",
+  bgcolor: "#fff",
+  boxShadow: 24,
+  p: 4,
+  borderRadius: "30px",
+  padding: "4rem",
+};
+
 type Alerts = {
   emailAlreadyExists: boolean;
   missingField: boolean;
@@ -77,6 +92,8 @@ type Alerts = {
 };
 
 const LoginRegister = () => {
+  const { height, width } = useWindowDimensions();
+
   const userContext = useContext(UserContext);
 
   const [alerts, setAlerts] = useState<Alerts>({
@@ -289,7 +306,7 @@ const LoginRegister = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={modalStyle}>
+        <Box sx={width > 900 ? modalStyle : mediumModalStyle}>
           {page === "login" && (
             <Stack>
               <Typography variant="mainSubHeading" marginBottom={2}>
