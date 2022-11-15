@@ -1,4 +1,4 @@
-CREATE DATABASE twinner;
+-- CREATE DATABASE twinner;
 
 CREATE TABLE profile(
     id SERIAL PRIMARY KEY,

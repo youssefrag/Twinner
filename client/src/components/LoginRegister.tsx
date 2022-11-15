@@ -176,12 +176,9 @@ const LoginRegister = () => {
       });
       return;
     }
-    let response = await fetch(
-      `http://localhost:8080/profile/${userLogin.email}`,
-      {
-        method: "GET",
-      }
-    );
+    let response = await fetch(`/profile/${userLogin.email}`, {
+      method: "GET",
+    });
     let result = await response.json();
     const userDataDB = result.rows[0];
     if (!userDataDB) {
@@ -264,7 +261,7 @@ const LoginRegister = () => {
       });
       return;
     }
-    let response = await fetch("http://localhost:8080/profiles", {
+    let response = await fetch("/profiles", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

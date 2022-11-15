@@ -55,15 +55,12 @@ const Notifications = () => {
   const [commentNots, setCommentNots] = useState<Notification[]>([]);
 
   const getCommentNots = async () => {
-    let response = await fetch(
-      `http://localhost:8080/comment_nots/${userContext.user.userId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    let response = await fetch(`/comment_nots/${userContext.user.userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     let result = await response.json();
     setCommentNots(result);
   };
@@ -89,15 +86,12 @@ const Notifications = () => {
   const [likeNots, setLikeNots] = useState<Notification[]>([]);
 
   const getLikeNots = async () => {
-    let response = await fetch(
-      `http://localhost:8080/like_nots/${userContext.user.userId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    let response = await fetch(`/like_nots/${userContext.user.userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     let result = await response.json();
     setLikeNots(result);
     // console.log(result);
