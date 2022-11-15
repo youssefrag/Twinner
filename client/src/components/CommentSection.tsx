@@ -114,7 +114,7 @@ const CommentSection = ({ postId }: Props) => {
     if (!postComment) {
       return;
     }
-    let response = await fetch("http://localhost:8080/add-comment", {
+    let response = await fetch("/add-comment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -137,7 +137,7 @@ const CommentSection = ({ postId }: Props) => {
   let [comments, setComments] = useState<Comment[]>([]);
 
   const getAllComments = async () => {
-    let response = await fetch(`http://localhost:8080/comments/${postId}`, {
+    let response = await fetch(`/comments/${postId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -173,7 +173,7 @@ const CommentSection = ({ postId }: Props) => {
   // Handle Delete Comment
 
   const handleDeleteComment = async (id: string) => {
-    let response = await fetch(`http://localhost:8080/comment/${id}`, {
+    let response = await fetch(`/comment/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

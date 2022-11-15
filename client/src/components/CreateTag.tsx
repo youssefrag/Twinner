@@ -72,7 +72,7 @@ const CreateTag = () => {
     if (!newTag) {
       return;
     }
-    let response = await fetch("http://localhost:8080/createTag", {
+    let response = await fetch("/createTag", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

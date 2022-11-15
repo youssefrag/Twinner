@@ -38,7 +38,7 @@ const Feed = () => {
   const [posts, setPosts] = useState<Post[]>([]);
 
   const getAllPostsAndProfiles = async () => {
-    let response = await fetch("http://localhost:8080/posts", {
+    let response = await fetch("/posts", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -95,7 +95,7 @@ const Feed = () => {
   let [filterTags, setFilterTags] = useState<Tag[]>([]);
 
   const getTags = async () => {
-    let response = await fetch("http://localhost:8080/allTags", {
+    let response = await fetch("/allTags", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

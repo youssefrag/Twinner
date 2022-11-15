@@ -102,7 +102,7 @@ const CreatePost = () => {
     if (content === "") {
       return;
     }
-    let response = await fetch("http://localhost:8080/posts", {
+    let response = await fetch("/posts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -120,7 +120,7 @@ const CreatePost = () => {
   };
 
   const getTags = async () => {
-    let response = await fetch("http://localhost:8080/allTags", {
+    let response = await fetch("/allTags", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

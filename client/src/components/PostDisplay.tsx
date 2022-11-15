@@ -104,7 +104,7 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
   const [likes, setLikes] = useState<string[]>([]);
 
   const getLikes = async () => {
-    let response = await fetch(`http://localhost:8080/likes/${id.toString()}`, {
+    let response = await fetch(`/likes/${id.toString()}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -123,7 +123,7 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
       alert("Please login to like or comment");
       return;
     }
-    let response = await fetch("http://localhost:8080/like-post", {
+    let response = await fetch("/like-post", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -140,7 +140,7 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
   };
 
   const handleRemoveLike = async () => {
-    let response = await fetch("http://localhost:8080/remove-like", {
+    let response = await fetch("/remove-like", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -162,7 +162,7 @@ const PostDisplay: React.FC<Props> = ({ post }) => {
   // DELETE POST FUNCTIONALITY
 
   const deletePost = async () => {
-    let response = await fetch(`http://localhost:8080/post/${id}`, {
+    let response = await fetch(`/post/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

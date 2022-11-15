@@ -1,12 +1,27 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const PORT = 8080;
-const pool = require("./db/db");
+const pool = require("./db");
+const path = require("path");
+const PORT = process.env.PORT || 8080;
+
+//process.env.PORT
+//process.env.NODE_ENV => production or undefined
 
 //middleware
 app.use(cors());
 app.use(express.json());
+
+app.use(express.static(path.join(__dirname, "client/build")));
+
+if (process.env.NODE_ENV === "production") {
+  //serve static content
+  //npm run build
+  app.use(express.static(path.join(__dirname, "client/build")));
+}
+
+console.log(__dirname);
+console.log(path.join(__dirname, "client/build"));
 
 //ROUTES
 
@@ -281,6 +296,10 @@ app.get("/like_nots/:userId", async (req, res) => {
   }
 });
 
-app.listen(8080, () => {
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build/index.html"));
+});
+
+app.listen(PORT, () => {
   console.log(`Server has started on port ${PORT} 👍`);
 });
